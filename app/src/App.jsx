@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import profile from './assets/profile.jpg'
+import kiitCampus from './assets/kiit-campus.jpg'
+import etHackathon from './assets/et-hackathon.jpg'
+import ieeePaper from './assets/ieee-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
+import LiveSignals from './components/LiveSignals'
 import {
   CountUp,
   Line,
@@ -15,13 +19,14 @@ import {
 /* ---------------- data ---------------- */
 const NAV = [
   ['About', 'about'],
+  ['Education', 'education'],
   ['Stack', 'tech'],
   ['Work', 'work'],
   ['Research', 'research'],
   ['Experience', 'experience'],
   ['Contact', 'contact'],
 ]
-const SECTION_IDS = ['top', 'about', 'tech', 'work', 'research', 'experience', 'contact']
+const SECTION_IDS = ['top', 'about', 'education', 'tech', 'work', 'research', 'experience', 'contact']
 
 const GREETINGS = [
   { text: 'नमस्ते', lang: 'Hindi', cls: 'script-hi' },
@@ -33,7 +38,7 @@ const GREETINGS = [
 
 const STATS = [
   ['02', 'Published papers', 'IEEE + Springer'],
-  ['250+', 'DSA problems', '89.7% acceptance'],
+  ['300+', 'DSA problems', 'Verified live below'],
   ['03', 'Systems from scratch', 'DB · Redis · Search'],
   ['61%', 'Violation rate cut', 'LLM red-teaming'],
 ]
@@ -77,10 +82,38 @@ const PROJECTS = [
 const RESEARCH = [
   { n: '01', title: 'A Robust Framework for Stress Testing and Reconstruction in Medical Imaging Systems',
     venue: 'IEEE CCICT 2025', meta: 'Co-author — led implementation & ML research · April 2025 · KIIT University',
-    desc: 'Led the framework implementation: built the reconstruction and perturbation pipeline used to stress-test medical imaging systems, and designed the evaluation methodology quantifying model degradation under reconstruction-based distortion.' },
+    desc: 'Led the framework implementation: built the reconstruction and perturbation pipeline used to stress-test medical imaging systems, and designed the evaluation methodology quantifying model degradation under reconstruction-based distortion.',
+    mark: 'IEEE Xplore', img: ieeePaper, alt: 'IEEE Xplore record listing the paper and its six authors',
+    link: 'https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=A%20Robust%20Framework%20for%20Stress%20Testing%20and%20Reconstruction%20in%20Medical%20Imaging%20Systems',
+    linkLabel: 'Read on IEEE Xplore' },
   { n: '02', title: 'Machine Intelligence Propelled Chatbot for College Inquiries Control',
-    venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Published January 2026 · Intl. Conference on Computing Systems & Intelligent Applications',
-    desc: 'A book-chapter contribution on applying machine intelligence to a college-inquiry chatbot — designing the intent handling and response system for a real institutional use case.' },
+    venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Presented at the conference · Published January 2026',
+    desc: 'A book-chapter contribution on applying machine intelligence to a college-inquiry chatbot — designing the intent handling and response system for a real institutional use case.',
+    mark: 'Springer Nature',
+    link: 'https://link.springer.com/search?query=Machine+Intelligence+Propelled+Chatbot+for+College+Inquiries+Control',
+    linkLabel: 'Find on SpringerLink' },
+]
+
+const EDUCATION = [
+  ['Degree', 'B.Tech, Computer Science & Engineering'],
+  ['Institution', 'Kalinga Institute of Industrial Technology'],
+  ['Duration', '2022 — 2026'],
+  ['CGPA', '7.34'],
+  ['Focus', 'Backend systems, databases, applied ML'],
+]
+
+const COURSEWORK = [
+  'Data Structures & Algorithms', 'Operating Systems', 'DBMS / RDBMS', 'Computer Networks',
+  'System Design', 'Compiler Design', 'Machine Learning', 'Software Engineering', 'Cloud Computing',
+]
+
+const AI_STACK = [
+  ['Claude', 'Opus · Sonnet', 'Agentic coding across real repositories — multi-file refactors, architecture review, and test authoring.'],
+  ['GPT', 'OpenAI', 'Spec drafting, edge-case generation, and pressure-testing system designs before I commit to them.'],
+  ['Gemini', 'Google', 'Long-context passes over papers and whole codebases when the window matters more than the reasoning depth.'],
+  ['GitHub Copilot', 'Inline', 'Line-level completion in the editor, kept on a short leash.'],
+  ['DeepEval · LangSmith', 'Evaluation', 'Adversarial harnesses and trace inspection — how SafeSteel AI measured a 61% drop in violations.'],
+  ['Prompt & context engineering', 'Practice', 'Structured prompting, tool schemas, and the retrieval design underneath Veilo.'],
 ]
 
 const SKILLS = [
@@ -96,7 +129,6 @@ const CERTS = [
   ['Linux Foundation Certified System Administrator', 'LFCS'],
   ['Microsoft Azure Essentials', 'Microsoft'],
   ['SAP Analytics Cloud — Data Analyst', 'SAP'],
-  ['Semi-finalist — ET-AI Hackathon 2026', 'Top teams / 500+'],
 ]
 
 const SOCIALS = [
@@ -364,9 +396,82 @@ export default function App() {
               <p>I’m a backend and systems-focused engineer graduating from <strong className="text-fg font-medium">KIIT University</strong> in 2026. Most early-career engineers in the AI hiring pool have shipped LLM wrappers — I’ve built the layer underneath them: a relational database engine, a Redis clone, and a hybrid search engine, all from scratch.</p>
               <p>That systems depth pairs with a real research track. I’ve co-authored <strong className="text-fg font-medium">two published papers</strong> on stress-testing and evaluating models, and I carry the same robustness-and-evaluation lens into engineering work like SafeSteel&nbsp;AI, an LLM red-teaming framework.</p>
               <p>I care about the parts of a system most people treat as magic — how bytes hit disk, how a query planner decides, how a model quietly degrades under distortion. As a fresher I’m after <strong className="text-fg font-medium">SDE, Applied&nbsp;AI, and apprenticeship</strong> roles where that curiosity is an asset.</p>
-              <div className="pt-3 flex flex-wrap gap-2">
-                {CERTS.map(([t]) => (<span key={t} className="press inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3.5 py-1.5 text-sm text-dim hover:border-accent/40 hover:text-fg"><span className="h-1.5 w-1.5 rounded-full bg-accent" /> {t}</span>))}
+            </div>
+          </div>
+        </section>
+
+        {/* EDUCATION */}
+        <section id="education" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
+          <div className="reveal mb-12 max-w-2xl">
+            <Kicker index="02">Education</Kicker>
+            <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
+              <Line delay={60}>Four years</Line>
+              <Line delay={150}>at KIIT.</Line>
+            </h2>
+          </div>
+
+          <figure className="reveal photo-fade relative overflow-hidden rounded-[1.75rem] border border-line">
+            <img
+              src={kiitCampus}
+              alt="The KISS &amp; KIIT Convention Centre on the KIIT University campus at dusk"
+              width="2018" height="700" loading="lazy"
+              className="w-full h-[200px] sm:h-[280px] md:h-[360px] object-cover"
+            />
+            <figcaption className="absolute inset-x-0 bottom-0 p-6 md:p-9">
+              <div className="font-mono text-xs uppercase tracking-[0.2em] text-accent">Bhubaneswar, Odisha</div>
+              <div className="mt-2 font-display text-3xl md:text-4xl leading-none">KIIT University</div>
+            </figcaption>
+          </figure>
+
+          <div className="mt-12 grid md:grid-cols-[1.05fr_1fr] gap-10 md:gap-16">
+            <dl className="reveal divide-y divide-line border-y border-line">
+              {EDUCATION.map(([term, value]) => (
+                <div key={term} className="grid grid-cols-[7.5rem_1fr] gap-4 py-4">
+                  <dt className="font-mono text-xs uppercase tracking-[0.14em] text-faint pt-1">{term}</dt>
+                  <dd className="text-fg">{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="reveal" style={{ '--i': 1 }}>
+              <div className="mb-4 font-mono text-xs uppercase tracking-[0.16em] text-faint">Coursework that stuck</div>
+              <div className="flex flex-wrap gap-2">
+                {COURSEWORK.map((c) => (
+                  <span key={c} className="text-sm rounded-lg bg-surface border border-line px-2.5 py-1.5 text-dim">{c}</span>
+                ))}
               </div>
+            </div>
+          </div>
+
+          {/* RECOGNITION */}
+          <div className="mt-16 md:mt-24">
+            <div className="reveal mb-6 font-mono text-xs uppercase tracking-[0.16em] text-faint">Recognition</div>
+            <div className="grid md:grid-cols-[1.15fr_1fr] gap-8 md:gap-12 items-start">
+              <div className="spot reveal overflow-hidden rounded-2xl border border-line bg-raise">
+                <img
+                  src={etHackathon}
+                  alt="The Economic Times AI Hackathon 2026 — Think AI. Build with GenAI."
+                  width="638" height="480" loading="lazy"
+                  className="w-full aspect-[16/10] object-cover"
+                />
+                <div className="p-6 md:p-7 border-t border-line">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <span className="rounded-full border border-accent/40 text-accent text-xs font-medium px-2.5 py-1">Semi-finalist</span>
+                    <span className="font-mono text-xs text-faint">2026</span>
+                  </div>
+                  <h3 className="mt-3 font-display text-2xl md:text-3xl leading-tight">ET AI Hackathon</h3>
+                  <p className="mt-2 text-dim leading-relaxed">
+                    Reached the semi-final round of The Economic Times’ national GenAI hackathon, placing among the leading teams from a field of 500+.
+                  </p>
+                </div>
+              </div>
+              <dl className="reveal divide-y divide-line border-y border-line" style={{ '--i': 1 }}>
+                {CERTS.map(([title, issuer]) => (
+                  <div key={title} className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-4">
+                    <dt className="text-fg">{title}</dt>
+                    <dd className="font-mono text-xs text-faint whitespace-nowrap">{issuer}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </section>
@@ -374,7 +479,7 @@ export default function App() {
         {/* TECH */}
         <section id="tech" className="mx-auto max-w-5xl px-6 py-20 md:py-24 border-t border-line">
           <div className="reveal mb-12 max-w-2xl">
-            <Kicker index="02">Tech stack</Kicker>
+            <Kicker index="03">Tech stack</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]"><Line delay={60}>Languages &amp; tools.</Line></h2>
             <p className="mt-4 text-dim text-lg">The stack I reach for — from low-level languages to the infra I build on.</p>
           </div>
@@ -382,12 +487,30 @@ export default function App() {
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4">{LANGS.map(([label, icon], i) => (<TechTile key={label} label={label} icon={icon} index={i} />))}</div>
           <div className="mt-10 mb-4 font-mono text-xs uppercase tracking-[0.16em] text-faint">Frameworks, data &amp; infra</div>
           <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 sm:gap-4">{TOOLS.map(([label, icon], i) => (<TechTile key={label} label={label} icon={icon} index={i} />))}</div>
+
+          <div className="mt-16">
+            <div className="reveal mb-2 font-mono text-xs uppercase tracking-[0.16em] text-faint">AI &amp; GenAI workflow</div>
+            <p className="reveal mb-7 text-dim max-w-2xl leading-relaxed">
+              I work AI-first, but I keep the judgement. These are the tools in rotation and what each one actually earns its place doing.
+            </p>
+            <div className="divide-y divide-line border-y border-line">
+              {AI_STACK.map(([name, kind, note], i) => (
+                <div key={name} style={{ '--i': i }} className="reveal grid sm:grid-cols-[14rem_1fr] gap-x-8 gap-y-1.5 py-5">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="text-fg font-medium">{name}</span>
+                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-faint">{kind}</span>
+                  </div>
+                  <p className="text-dim leading-relaxed">{note}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </section>
 
         {/* WORK */}
         <section id="work" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
           <div className="reveal mb-14 max-w-2xl">
-            <Kicker index="03">Selected work</Kicker>
+            <Kicker index="04">Selected work</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
               <Line delay={60}>Things I built</Line>
               <Line delay={150}>from scratch.</Line>
@@ -411,12 +534,16 @@ export default function App() {
               </a>
             ))}
           </div>
+
+          <div className="reveal mt-20">
+            <LiveSignals />
+          </div>
         </section>
 
         {/* RESEARCH */}
         <section id="research" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
           <div className="reveal mb-12 max-w-2xl">
-            <Kicker index="04">Research &amp; publications</Kicker>
+            <Kicker index="05">Research &amp; publications</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
               <Line delay={60}>Two papers,</Line>
               <Line delay={150}>one lens.</Line>
@@ -425,14 +552,33 @@ export default function App() {
           </div>
           <div className="space-y-4">
             {RESEARCH.map((r, i) => (
-              <article key={r.n} style={{ '--i': i }} className="spot reveal rounded-2xl border border-line bg-surface p-7 md:p-8 hover:border-line2 transition-colors duration-300">
-                <div className="grid md:grid-cols-[auto_1fr] gap-5">
-                  <div className="font-display text-4xl text-accent leading-none">{r.n}</div>
+              <article key={r.n} style={{ '--i': i }} className="spot reveal rounded-2xl border border-line bg-surface p-6 md:p-8 hover:border-line2 transition-colors duration-300">
+                <div className="grid md:grid-cols-[190px_1fr] gap-6 md:gap-8">
+                  {r.img ? (
+                    <a
+                      href={r.link} target="_blank" rel="noopener noreferrer"
+                      className="block overflow-hidden rounded-xl border border-line2 bg-white h-[190px]"
+                      aria-label={`${r.linkLabel} — ${r.title}`}
+                    >
+                      <img src={r.img} alt={r.alt} width="790" height="800" loading="lazy" className="h-full w-full object-cover object-top" />
+                    </a>
+                  ) : (
+                    <div className="grid h-[190px] place-items-center rounded-xl border border-line2 bg-raise px-4 text-center">
+                      <div>
+                        <div className="font-display text-5xl text-accent leading-none">{r.n}</div>
+                        <div className="mt-3 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-faint">{r.mark}</div>
+                      </div>
+                    </div>
+                  )}
                   <div>
-                    <h3 className="text-xl leading-snug text-fg">{r.title}</h3>
+                    <div className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-faint">{r.mark}</div>
+                    <h3 className="mt-2 text-xl leading-snug text-fg">{r.title}</h3>
                     <div className="mt-2 text-sm font-semibold text-accent">{r.venue}</div>
                     <div className="text-sm text-faint">{r.meta}</div>
                     <p className="mt-3 text-dim leading-relaxed">{r.desc}</p>
+                    <a href={r.link} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-1.5 text-sm text-dim hover:text-accent transition-colors duration-300">
+                      {r.linkLabel} <Arrow />
+                    </a>
                   </div>
                 </div>
               </article>
@@ -443,7 +589,7 @@ export default function App() {
         {/* EXPERIENCE + SKILLS */}
         <section id="experience" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
           <div className="reveal mb-12">
-            <Kicker index="05">Experience</Kicker>
+            <Kicker index="06">Experience</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]"><Line delay={60}>Where I’ve shipped.</Line></h2>
           </div>
           <div className="spot reveal rounded-2xl border border-line p-7 md:p-9 hover:border-line2 transition-colors duration-300">
@@ -460,7 +606,7 @@ export default function App() {
           </div>
 
           <div className="reveal mt-16 mb-8">
-            <Kicker index="06">Toolkit</Kicker>
+            <Kicker index="07">Toolkit</Kicker>
             <h2 className="font-display text-3xl md:text-5xl leading-[1.05]"><Line delay={60}>What I work with.</Line></h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
