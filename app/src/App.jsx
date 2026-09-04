@@ -208,6 +208,47 @@ function Kicker({ index, children }) {
   )
 }
 
+/* click-to-load YouTube facade — no third-party request until the viewer opts in */
+function LittleRoomEmbed() {
+  const [playing, setPlaying] = useState(false)
+  const videoId = 'Eh63BLNgDYQ'
+  const title = 'Great Things Start in Little Rooms — André 3000, via GoodScrolls'
+  return (
+    <div className="spot relative mx-auto aspect-[9/16] w-full max-w-[240px] overflow-hidden rounded-[1.5rem] border border-line2 bg-raise">
+      {playing ? (
+        <iframe
+          src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+          title={title}
+          className="absolute inset-0 h-full w-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setPlaying(true)}
+          aria-label={`Play — ${title}`}
+          className="press group absolute inset-0 h-full w-full"
+        >
+          <img
+            src={`https://i.ytimg.com/vi/${videoId}/hq2.jpg`}
+            alt=""
+            loading="lazy"
+            width="480" height="360"
+            className="h-full w-full object-cover"
+          />
+          <span className="absolute inset-0 bg-black/35 transition-colors duration-300 group-hover:bg-black/15" />
+          <span className="absolute inset-0 grid place-items-center">
+            <span className="grid h-14 w-14 place-items-center rounded-full bg-accent text-base shadow-lg transition-transform duration-300 group-hover:scale-110">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </span>
+        </button>
+      )}
+    </div>
+  )
+}
+
 /* ---------------- preloader ---------------- */
 function Preloader({ onDone }) {
   const [i, setI] = useState(0)
@@ -640,6 +681,26 @@ export default function App() {
             </ul>
           </div>
 
+          {/* INTERLUDE — a personal aside, not a numbered section */}
+          <div className="reveal mt-20 md:mt-28 grid md:grid-cols-[1fr_240px] gap-10 md:gap-16 items-center">
+            <div>
+              <div className="font-mono text-xs uppercase tracking-[0.22em] text-faint">What aspires me to keep going</div>
+              <blockquote className="mt-4 font-display text-3xl md:text-5xl leading-[1.08] text-fg">
+                “Great things start in a little room.”
+              </blockquote>
+              <p className="mt-5 text-dim leading-relaxed max-w-md">
+                André 3000, on staying small and starting anyway. It’s the closest thing I have to a personal motto — most of what’s on this page started in one.
+              </p>
+              <p className="mt-4 font-mono text-xs text-faint">
+                Source: André 3000 · via{' '}
+                <a href="https://www.youtube.com/@Good_Scrolls" target="_blank" rel="noopener noreferrer" className="text-dim hover:text-accent transition-colors duration-300">GoodScrolls</a>
+                {' '}on YouTube ·{' '}
+                <a href="https://www.youtube.com/shorts/Eh63BLNgDYQ" target="_blank" rel="noopener noreferrer" className="text-dim hover:text-accent transition-colors duration-300">watch the clip</a>
+              </p>
+            </div>
+            <LittleRoomEmbed />
+          </div>
+
           <div className="reveal mt-16 mb-8">
             <Kicker index="07">Toolkit</Kicker>
             <h2 className="font-display text-3xl md:text-5xl leading-[1.05]"><Line delay={60}>What I work with.</Line></h2>
@@ -692,16 +753,6 @@ export default function App() {
             <a className="hover:text-fg transition-colors duration-300" href="https://leetcode.com/rishicreates26" target="_blank" rel="noopener noreferrer">LeetCode</a>
             <a className="hover:text-fg transition-colors duration-300" href="mailto:rishikeshsarangi56@gmail.com">Email</a>
           </div>
-        </div>
-        <div className="border-t border-line px-6 py-6 text-center">
-          <a
-            href="https://www.youtube.com/shorts/Eh63BLNgDYQ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="italic text-sm text-faint hover:text-accent transition-colors duration-300"
-          >
-            Little room — great things start from a &lsquo;little room, yeah man!&rsquo;
-          </a>
         </div>
       </footer>
     </div>
