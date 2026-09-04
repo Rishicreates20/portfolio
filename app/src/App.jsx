@@ -5,6 +5,7 @@ import etHackathon from './assets/et-hackathon.jpg'
 import ieeePaper from './assets/ieee-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
 import LiveSignals from './components/LiveSignals'
+import { BRAND_ICONS } from './components/brandIcons'
 import {
   CountUp,
   Line,
@@ -108,12 +109,18 @@ const COURSEWORK = [
 ]
 
 const AI_STACK = [
-  ['Claude', 'Opus · Sonnet', 'Agentic coding across real repositories — multi-file refactors, architecture review, and test authoring.'],
-  ['GPT', 'OpenAI', 'Spec drafting, edge-case generation, and pressure-testing system designs before I commit to them.'],
-  ['Gemini', 'Google', 'Long-context passes over papers and whole codebases when the window matters more than the reasoning depth.'],
-  ['GitHub Copilot', 'Inline', 'Line-level completion in the editor, kept on a short leash.'],
-  ['DeepEval · LangSmith', 'Evaluation', 'Adversarial harnesses and trace inspection — how SafeSteel AI measured a 61% drop in violations.'],
-  ['Prompt & context engineering', 'Practice', 'Structured prompting, tool schemas, and the retrieval design underneath Veilo.'],
+  { icon: 'claude', name: 'Claude', kind: 'Opus · Sonnet',
+    note: 'Agentic coding across real repositories — multi-file refactors, architecture review, and test authoring.' },
+  { icon: 'gpt', name: 'GPT', kind: 'OpenAI',
+    note: 'Spec drafting, edge-case generation, and pressure-testing system designs before I commit to them.' },
+  { icon: 'gemini', name: 'Gemini', kind: 'Google',
+    note: 'Long-context passes over papers and whole codebases when the window matters more than the reasoning depth.' },
+  { icon: 'copilot', name: 'GitHub Copilot', kind: 'Inline',
+    note: 'Line-level completion in the editor, kept on a short leash.' },
+  { icon: 'langchain', name: 'DeepEval · LangSmith', kind: 'Evaluation',
+    note: 'Adversarial harnesses and trace inspection — how SafeSteel AI measured a 61% drop in violations.' },
+  { icon: 'prompt', name: 'Prompt & context engineering', kind: 'Practice',
+    note: 'Structured prompting, tool schemas, and the retrieval design underneath Veilo.' },
 ]
 
 const SKILLS = [
@@ -165,6 +172,29 @@ function Arrow({ className = '' }) {
     <svg className={className} viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
       <path d="M7 17 17 7M8 7h9v9" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  )
+}
+
+/* GPT and the practice-based rows have no official mark to license — a
+   consistent monogram tile keeps the row from going logo / no-logo. */
+const MONOGRAMS = {
+  gpt: 'GPT',
+  prompt: '{ }',
+}
+
+function BrandIcon({ id, className = 'h-6 w-6' }) {
+  const brand = BRAND_ICONS[id]
+  if (brand) {
+    return (
+      <svg viewBox="0 0 24 24" className={className} fill="currentColor" role="img" aria-label={brand.title}>
+        <path d={brand.path} />
+      </svg>
+    )
+  }
+  return (
+    <span className={`grid place-items-center font-mono font-semibold text-[0.6rem] tracking-tight ${className}`} aria-hidden="true">
+      {MONOGRAMS[id] ?? '•'}
+    </span>
   )
 }
 
@@ -494,13 +524,18 @@ export default function App() {
               I work AI-first, but I keep the judgement. These are the tools in rotation and what each one actually earns its place doing.
             </p>
             <div className="divide-y divide-line border-y border-line">
-              {AI_STACK.map(([name, kind, note], i) => (
-                <div key={name} style={{ '--i': i }} className="reveal grid sm:grid-cols-[14rem_1fr] gap-x-8 gap-y-1.5 py-5">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className="text-fg font-medium">{name}</span>
-                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-faint">{kind}</span>
+              {AI_STACK.map(({ icon, name, kind, note }, i) => (
+                <div key={name} style={{ '--i': i }} className="reveal grid sm:grid-cols-[14rem_1fr] gap-x-5 gap-y-2 py-5">
+                  <div className="flex items-center gap-3.5">
+                    <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg border border-line bg-surface text-dim">
+                      <BrandIcon id={icon} className="h-[18px] w-[18px]" />
+                    </span>
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="text-fg font-medium">{name}</span>
+                      <span className="font-mono text-[0.68rem] uppercase tracking-[0.14em] text-faint">{kind}</span>
+                    </div>
                   </div>
-                  <p className="text-dim leading-relaxed">{note}</p>
+                  <p className="text-dim leading-relaxed sm:pl-0">{note}</p>
                 </div>
               ))}
             </div>
@@ -656,6 +691,14 @@ export default function App() {
             <a className="hover:text-fg transition-colors duration-300" href="https://linkedin.com/in/rishikeshsarangi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a className="hover:text-fg transition-colors duration-300" href="https://leetcode.com/rishicreates26" target="_blank" rel="noopener noreferrer">LeetCode</a>
             <a className="hover:text-fg transition-colors duration-300" href="mailto:rishikeshsarangi56@gmail.com">Email</a>
+            <a 
+          className="hover:text-fg transition-colors duration-300" 
+         href="https://www.youtube.com/shorts/Eh63BLNgDYQ" 
+        target="_blank" 
+        rel="noopener noreferrer"
+         >
+        Little room — Great things starts from a 'little room yeah man!'
+        </a>
           </div>
         </div>
       </footer>
