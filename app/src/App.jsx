@@ -691,15 +691,17 @@ export default function App() {
             <a className="hover:text-fg transition-colors duration-300" href="https://linkedin.com/in/rishikeshsarangi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a className="hover:text-fg transition-colors duration-300" href="https://leetcode.com/rishicreates26" target="_blank" rel="noopener noreferrer">LeetCode</a>
             <a className="hover:text-fg transition-colors duration-300" href="mailto:rishikeshsarangi56@gmail.com">Email</a>
-            <a 
-          className="hover:text-fg transition-colors duration-300" 
-         href="https://www.youtube.com/shorts/Eh63BLNgDYQ" 
-        target="_blank" 
-        rel="noopener noreferrer"
-         >
-        Little room — Great things starts from a 'little room yeah man!'
-        </a>
           </div>
+        </div>
+        <div className="border-t border-line px-6 py-6 text-center">
+          <a
+            href="https://www.youtube.com/shorts/Eh63BLNgDYQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="italic text-sm text-faint hover:text-accent transition-colors duration-300"
+          >
+            Little room — great things start from a &lsquo;little room, yeah man!&rsquo;
+          </a>
         </div>
       </footer>
     </div>
