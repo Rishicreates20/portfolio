@@ -6,7 +6,7 @@ import { useState } from 'react'
   emails an alert. Until then, sending opens the visitor's mail app with the
   message filled in, so the form never silently drops a message.
 */
-export const CONTACT_ENDPOINT = ''
+export const CONTACT_ENDPOINT = 'https://formspree.io/f/xljbjovv'
 const EMAIL = 'rishikeshsarangi56@gmail.com'
 
 const field = 'w-full rounded-xl border border-line bg-base/60 px-4 py-3 text-fg placeholder:text-faint focus:border-accent/60 focus:outline-none transition-colors duration-300'
