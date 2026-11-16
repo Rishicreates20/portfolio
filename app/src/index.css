@@ -196,7 +196,9 @@
 .p3d-tilt, .p3d-float, .p3d-motion, .p3d-group { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
 .p3d-tilt { transform: rotateX(var(--py)) rotateY(var(--px)); transition: transform .6s var(--ease-emph); }
 .p3d-float { animation: p3dFloat 5.5s ease-in-out infinite; }
-.p3d-motion { transform: rotateX(var(--bx)) rotateY(-30deg); will-change: transform; }
+/* Keyframes never read custom properties, so every loop can run on the compositor. */
+.p3d-motion { transform: rotateX(var(--bx)); }
+.p3d-spin, .p3d-sway { transform: rotateY(-30deg); will-change: transform; }
 .p3d-spin { animation: p3dSpin var(--spd) linear infinite; }
 .p3d-sway { animation: p3dSway calc(var(--spd) * .6) ease-in-out infinite; }
 .p3d-md .p3d-tilt { scale: 1; }
@@ -205,11 +207,12 @@
 .p3d-sm .p3d-tilt { scale: .7; }
 
 @keyframes p3dFloat { 0%, 100% { transform: translateY(-4px); } 50% { transform: translateY(6px); } }
-@keyframes p3dSpin { from { transform: rotateX(var(--bx)) rotateY(0deg); } to { transform: rotateX(var(--bx)) rotateY(360deg); } }
-@keyframes p3dSway { 0%, 100% { transform: rotateX(var(--bx)) rotateY(-32deg); } 50% { transform: rotateX(var(--bx)) rotateY(32deg); } }
+@keyframes p3dSpin { from { transform: rotateY(0deg); } to { transform: rotateY(360deg); } }
+@keyframes p3dSway { 0%, 100% { transform: rotateY(-32deg); } 50% { transform: rotateY(32deg); } }
 @keyframes p3dCounter { from { transform: rotateY(0deg); } to { transform: rotateY(-360deg); } }
 @keyframes p3dRing { from { transform: rotateZ(0deg); } to { transform: rotateZ(360deg); } }
-@keyframes p3dLayer { 0%, 100% { transform: translateY(var(--y)); } 50% { transform: translateY(calc(var(--y) * 1.28)); } }
+@keyframes p3dBobUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes p3dBobDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(7px); } }
 @keyframes p3dBar { 0%, 100% { transform: scaleY(.35); } 50% { transform: scaleY(1); } }
 
 .p3d-shadow {
@@ -233,7 +236,8 @@
 .p3d-top { background: hsla(var(--h), 90%, 70%, .45); }
 .p3d-axis { position: absolute; left: 0; top: 0; background: linear-gradient(hsla(var(--h), 95%, 75%, .9), transparent); }
 
-.p3d-layer { animation: p3dLayer 3.6s ease-in-out infinite; transform: translateY(var(--y)); }
+.p3d-bob-up { animation: p3dBobUp 3.6s ease-in-out infinite; }
+.p3d-bob-down { animation: p3dBobDown 3.6s ease-in-out infinite; }
 .p3d-slab { background: radial-gradient(circle at 35% 30%, hsla(var(--h), 90%, 66%, .5), hsla(var(--h), 70%, 26%, .32)); box-shadow: 0 0 22px hsla(var(--h), 95%, 60%, .22), inset 0 0 0 4px hsla(var(--h), 90%, 70%, .12); }
 .p3d-slab-top { background: radial-gradient(circle at 35% 30%, hsla(var(--h), 95%, 72%, .7), hsla(var(--h), 75%, 34%, .45)); }
 

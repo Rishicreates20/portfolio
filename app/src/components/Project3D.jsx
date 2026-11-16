@@ -65,12 +65,14 @@ function Stack({ glyph, shape = 'disc' }) {
     <div className="p3d-group">
       <div className="p3d-axis" style={plane(2, 96, 'none')} />
       {layers.map((i) => (
-        <div key={i} className="p3d-group p3d-layer" style={{ '--y': `${(i - 1.5) * 22}px`, animationDelay: `${i * -0.35}s` }}>
+        <div key={i} className="p3d-group" style={{ transform: `translateY(${(i - 1.5) * 22}px)` }}>
+          <div className={`p3d-group ${i < 2 ? 'p3d-bob-up' : 'p3d-bob-down'}`} style={{ animationDelay: `${i * -0.35}s` }}>
           <div
             className={`p3d-face p3d-slab ${shape === 'disc' ? 'rounded-full' : 'rounded-[14px]'} ${i === 0 ? 'p3d-slab-top' : ''}`}
             style={plane(size, size, 'rotateX(90deg)')}
           >
             {i === 0 && <Glyph name={glyph} className="h-7 w-7" />}
+          </div>
           </div>
         </div>
       ))}
@@ -248,8 +250,10 @@ export default function Project3D({ variant = 'cube', hue = 36, glyph = 'bolt', 
       <div className="p3d-shadow" />
       <div className="p3d-tilt">
         <div className="p3d-float">
-          <div className={`p3d-motion p3d-${motion}`}>
-            <C glyph={glyph} shape={shape} />
+          <div className="p3d-motion">
+            <div className={`p3d-group p3d-${motion}`}>
+              <C glyph={glyph} shape={shape} />
+            </div>
           </div>
         </div>
       </div>

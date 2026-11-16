@@ -43,6 +43,7 @@ export default function ScrollCursor() {
     const onMove = (e) => {
       targetX = e.clientX
       targetY = e.clientY
+      kick()
       if (!live) {
         live = true
         x = targetX
@@ -53,13 +54,16 @@ export default function ScrollCursor() {
     const onOver = (e) => {
       const el = e.target instanceof Element ? e.target.closest('a, button, [data-cursor]') : null
       hoverTarget = el ? 1 : 0
+      kick()
     }
-    const onDown = () => { pressTarget = 1 }
-    const onUp = () => { pressTarget = 0 }
+    const onDown = () => { pressTarget = 1; kick() }
+    const onUp = () => { pressTarget = 0; kick() }
     const onLeave = () => { live = false; root.classList.remove('is-live') }
 
+    // Only animate while something is moving; an idle cursor costs no main-thread work.
+    const kick = () => { if (!raf) raf = requestAnimationFrame(frame) }
     const frame = () => {
-      raf = requestAnimationFrame(frame)
+      raf = 0
 
       x = lerp(x, targetX, 0.2)
       y = lerp(y, targetY, 0.2)
@@ -90,6 +94,12 @@ export default function ScrollCursor() {
       chevron.style.opacity = String(activity * (1 - hover))
       chevron.style.transform = `translate(-50%, -50%) scale(${1 - hover}) scaleY(${velocity < 0 ? -1 : 1})`
       dot.style.transform = `translate(-50%, -50%) scale(${clamp01(1 - activity * 0.75 - hover * 0.6)})`
+
+      const settled =
+        Math.abs(x - targetX) < 0.1 && Math.abs(y - targetY) < 0.1 &&
+        Math.abs(velocity) < 0.05 && activity < 0.005 &&
+        Math.abs(hover - hoverTarget) < 0.005 && Math.abs(press - pressTarget) < 0.005
+      if (!settled) raf = requestAnimationFrame(frame)
     }
 
     window.addEventListener('pointermove', onMove, { passive: true })
@@ -97,7 +107,8 @@ export default function ScrollCursor() {
     window.addEventListener('pointerdown', onDown, { passive: true })
     window.addEventListener('pointerup', onUp, { passive: true })
     document.addEventListener('pointerleave', onLeave)
-    raf = requestAnimationFrame(frame)
+    window.addEventListener('scroll', kick, { passive: true })
+    kick()
 
     return () => {
       cancelAnimationFrame(raf)
@@ -106,6 +117,7 @@ export default function ScrollCursor() {
       window.removeEventListener('pointerdown', onDown)
       window.removeEventListener('pointerup', onUp)
       document.removeEventListener('pointerleave', onLeave)
+      window.removeEventListener('scroll', kick)
       root.classList.remove('is-live')
     }
   }, [])

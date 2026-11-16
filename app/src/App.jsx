@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useDeferredValue, useEffect, useRef, useState } from 'react'
 import profile from './assets/profile.jpg'
 import kiitCampus from './assets/kiit-campus.jpg'
 import etHackathon from './assets/et-hackathon.jpg'
@@ -541,7 +541,9 @@ function ProjectCard({ p, index }) {
 
 function ProjectGrid() {
   const [filter, setFilter] = useState('all')
-  const shown = PROJECTS.filter((p) => filter === 'all' || p.cats.includes(filter))
+  // The chip highlights at once; the heavier grid re-render follows without blocking input.
+  const deferred = useDeferredValue(filter)
+  const shown = PROJECTS.filter((p) => deferred === 'all' || p.cats.includes(deferred))
   const counts = Object.fromEntries(PROJECT_FILTERS.map(([id]) => [id, id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.cats.includes(id)).length]))
   return (
     <>
@@ -560,7 +562,7 @@ function ProjectGrid() {
       </div>
       <div className="reveal grid md:grid-cols-2 gap-4 md:gap-5">
         {shown.map((p, i) => (
-          <ProjectCard key={p.id} p={filter === 'all' ? p : { ...p, featured: false }} index={i} />
+          <ProjectCard key={p.id} p={deferred === 'all' ? p : { ...p, featured: false }} index={i} />
         ))}
       </div>
     </>
