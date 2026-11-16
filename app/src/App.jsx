@@ -186,17 +186,26 @@ const MORE_WORK = [
 
 const RESEARCH = [
   { n: '01', title: 'A Robust Framework for Stress Testing and Reconstruction in Medical Imaging Systems',
-    venue: 'IEEE CCICT 2025', meta: 'Co-author — led implementation & ML research · April 2025 · KIIT University',
-    desc: 'Led the framework implementation: built the reconstruction and perturbation pipeline used to stress-test medical imaging systems, and designed the evaluation methodology quantifying model degradation under reconstruction-based distortion.',
+    venue: 'IEEE CCICT 2025', meta: 'Co-author · April 2025 · KIIT University',
+    desc: 'A framework for stress-testing medical imaging models with image reconstruction techniques, measuring how much model performance degrades when the input is reconstructed or distorted.',
     mark: 'IEEE Xplore', img: ieeePaper, alt: 'IEEE Xplore record listing the paper and its six authors',
     link: 'https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=A%20Robust%20Framework%20for%20Stress%20Testing%20and%20Reconstruction%20in%20Medical%20Imaging%20Systems',
     linkLabel: 'Read on IEEE Xplore' },
   { n: '02', title: 'Machine Intelligence Propelled Chatbot for College Inquiries Control',
-    venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Presented at the conference · Published January 2026',
-    desc: 'A book-chapter contribution on applying machine intelligence to a college-inquiry chatbot — designing the intent handling and response system for a real institutional use case.',
+    venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Published January 2026',
+    desc: 'A book chapter on applying machine intelligence to a chatbot that answers college inquiries for a real institution.',
     mark: 'Springer Nature',
     link: 'https://link.springer.com/search?query=Machine+Intelligence+Propelled+Chatbot+for+College+Inquiries+Control',
     linkLabel: 'Find on SpringerLink' },
+]
+
+// Soft skills, each backed by a fact on this page (STRONG entries in the master profile only).
+const SOFT_SKILLS = [
+  ['Presenting insights', 'Turned 24 AI-engine checks into 3 root causes, 5 fixes and a 90-day plan in a 10-slide deck for a brand team.', '#/work/twt'],
+  ['Written communication', 'Co-authored 2 peer-reviewed papers (IEEE CCICT 2025, Springer ComSIA 2025) and wrote a repro script for every API finding.', '#/work/waves'],
+  ['Problem-solving', 'Traced a CI failure that local setup hid to a missing pgvector extension, and fixed a Gemini 400 by bisecting the request.', '#/work/studypilot'],
+  ['Attention to detail', '1,700+ tests on every change, 500+ adversarial prompts, 24 structured checks.', '#/work/safesteel'],
+  ['Teamwork', 'Shipped features in an Agile team of 20 alongside senior developers; co-author on both papers.', '#experience'],
 ]
 
 const EDUCATION = [
@@ -610,7 +619,10 @@ function useCaseRoute() {
       setRoute(next)
       if (!next) {
         const id = window.location.hash.slice(1)
-        requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView())
+        // Scroll again once lazy content above has settled, so the section lands at the top.
+        const go = () => document.getElementById(id)?.scrollIntoView()
+        requestAnimationFrame(go)
+        setTimeout(go, 400)
       }
     }
     window.addEventListener('hashchange', onHash)
@@ -892,12 +904,12 @@ export default function App() {
         {/* RESEARCH */}
         <section id="research" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
           <div className="reveal mb-12 max-w-2xl">
-            <Kicker index="05">Research &amp; publications</Kicker>
+            <Kicker index="05">Research &amp; case studies</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
-              <Line delay={60}>Two papers,</Line>
-              <Line delay={150}>one lens.</Line>
+              <Line delay={60}>Find the cause,</Line>
+              <Line delay={150}>then explain it.</Line>
             </h2>
-            <p className="mt-4 text-dim text-lg">Model robustness and evaluation — the through-line connecting my research and my engineering.</p>
+            <p className="mt-4 text-dim text-lg">Two published papers and four written case studies. Each one starts with a measurement and ends with something another person can read and act on.</p>
           </div>
           <div className="space-y-4">
             {RESEARCH.map((r, i) => (
@@ -932,6 +944,49 @@ export default function App() {
                 </div>
               </article>
             ))}
+          </div>
+        
+          <div className="reveal mt-16 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Case studies</div>
+              <h3 className="mt-2 font-display text-3xl md:text-4xl">Written up in full</h3>
+            </div>
+          </div>
+          <div className="reveal mt-6 grid sm:grid-cols-2 gap-4">
+            {['twt', 'studypilot', 'waves', 'safesteel'].map((k, i) => {
+              const c = CASE_STUDIES[k]
+              return (
+                <a key={k} href={`#/work/${k}`} style={{ '--i': i, '--h': c.icon.hue }}
+                  className="spot tile group flex flex-col rounded-2xl border border-line bg-surface p-6 hover:border-line2 transition-colors duration-300">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="font-mono text-[0.65rem] uppercase tracking-[0.16em] proj-hue">{c.kicker.replace('Case study · ', '')}</div>
+                      <div className="mt-2 text-xl text-fg leading-snug">{c.short || c.title}</div>
+                    </div>
+                    <div className="proj-stage relative h-24 w-24 shrink-0 rounded-xl border border-line">
+                      <Project3D {...c.icon} size="sm" />
+                    </div>
+                  </div>
+                  <p className="mt-3 text-sm text-dim leading-relaxed line-clamp-3">{c.lede}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {c.skills.map((sk) => <span key={sk} className="rounded-full border border-line2 px-2.5 py-1 text-[0.7rem] text-dim">{sk}</span>)}
+                  </div>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm text-dim group-hover:text-accent transition-colors duration-300">Read case study <Arrow /></span>
+                </a>
+              )
+            })}
+          </div>
+
+          <div className="reveal mt-16">
+            <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Soft skills, with proof</div>
+            <dl className="mt-5 grid md:grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line">
+              {SOFT_SKILLS.map(([k, v, href], i) => (
+                <a key={k} href={href} className={`block bg-base p-5 ${i === SOFT_SKILLS.length - 1 && SOFT_SKILLS.length % 2 ? 'md:col-span-2' : ''} hover:bg-surface transition-colors duration-300`}>
+                  <dt className="text-fg font-medium">{k}</dt>
+                  <dd className="mt-1 text-sm text-dim leading-relaxed">{v}</dd>
+                </a>
+              ))}
+            </dl>
           </div>
         </section>
 

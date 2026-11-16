@@ -1,13 +1,59 @@
 import { useEffect } from 'react'
 import Project3D from './Project3D'
+import twtCover from '../assets/twt-1.jpg'
+import twtEvidence from '../assets/twt-5.jpg'
+import twtDiagnosis from '../assets/twt-7.jpg'
+import twtPlan from '../assets/twt-9.jpg'
+
+const BASE = import.meta.env.BASE_URL
 
 /*
   Long-form write-ups for the projects with the most to show.
   Every fact here comes from the master profile; nothing is estimated.
 */
 export const CASE_STUDIES = {
+  twt: {
+    title: 'The Whole Truth: AI Visibility Audit',
+    short: 'TWT AI Visibility Audit',
+    kicker: 'Case study · Brand audit',
+    back: 'research',
+    skills: ['Presenting insights', 'Problem-solving', 'Written communication'],
+    lede: 'An audit of how AI assistants talk about The Whole Truth, an Indian clean-label food brand. I asked four AI engines what a real buyer would ask, found the brand missing from 20 of 24 answers, traced it to three causes and wrote it up as a 10-slide deck with five fixes and a 90-day plan.',
+    icon: { variant: 'orbit', glyph: 'search', hue: 78, tilt: -14 },
+    cover: { src: twtCover, alt: 'Title slide: The Whole Truth, AI Visibility Audit' },
+    facts: [['Checks', '24'], ['AI engines', '4'], ['Brand missing', '20 of 24'], ['Deliverable', '10-slide deck']],
+    links: [['Download the deck (PDF)', BASE + 'TWT-AI-Visibility-Audit.pdf']],
+    sections: [
+      { h: 'The brief', p: [
+        'This was my assignment for the Kasparro Brand Engineer role, July 2026. More shoppers now ask an AI assistant what to buy instead of searching, and a brand that is not named in the answer is not on the shortlist. The question: does AI recommend The Whole Truth (TWT)?',
+      ] },
+      { h: 'How I measured it', list: [
+        'Wrote 6 buyer-intent prompts, the questions a real shopper would type, such as which protein powder is cleanest in India.',
+        'Ran each one on ChatGPT, Gemini, Claude and Perplexity: 24 answers, all checked by me.',
+        'Benchmarked competitors: Optimum Nutrition leads "best protein powder", and adding the word "cleanest" flips the answer to Transparent Labs. That clean-label query is the one TWT should own in India.',
+      ], fig: { src: twtEvidence, alt: 'Slide: TWT is missing from 20 of 24 AI answers, shown as a grid of 24 squares' } },
+      { h: 'Three root causes', list: [
+        'No structured product data on the Shopify site, so AI cannot read prices, ratings or attributes.',
+        'The lab reports (Trustified, YCL) live on external Notion pages, not on TWT’s own domain.',
+        'Headlines about an FSSAI "sweetened with dates" controversy outrank TWT’s own account.',
+      ], fig: { src: twtDiagnosis, alt: 'Slide: three reasons AI can’t see TWT' } },
+      { h: 'Five fixes and a 90-day plan', list: [
+        'JSON-LD Product, AggregateRating and FAQPage markup in the Shopify theme.',
+        'A lab-tests page on TWT’s own domain.',
+        'Put TWT’s full account of the FSSAI story in front of top outlets, each story linking to the lab page.',
+        'A full Google Merchant Center feed for every SKU, sachets included.',
+        'Disclosed comparison content on Reddit and YouTube.',
+      ], p: ['The plan runs in three stages (days 1–14, 15–45, 46–90) and re-runs the same 24-answer audit on days 30, 60 and 90 to measure progress. These were proposals; I did not implement them.'],
+        fig: { src: twtPlan, alt: 'Slide: the 90-day plan, measured every 30 days' } },
+      { h: 'What it shows', p: [
+        'Most of my work is code. This one was about turning 24 data points into a story a brand team, not engineers, could act on: one number up front, three causes, five fixes, and a plan with checkpoints. Every slide makes one point.',
+      ] },
+    ],
+  },
+
   studypilot: {
     title: 'StudyPilot',
+    skills: ['Problem-solving', 'Ownership'],
     kicker: 'Case study · AI learning platform',
     lede: 'A learning platform that turns a goal into a study plan: notes, quizzes, a roadmap and resource links for every topic, with progress tracked over time.',
     icon: { variant: 'stack', shape: 'square', glyph: 'book', hue: 36 },
@@ -42,6 +88,7 @@ export const CASE_STUDIES = {
 
   waves: {
     title: 'Waves QA',
+    skills: ['Attention to detail', 'Written communication'],
     kicker: 'Case study · API testing',
     lede: 'An API test harness for the smallest.ai Waves text-to-speech API, built for their hiring trial. It measures latency across three transports, logs every request so it can be traced, and ships a repro script for every finding.',
     icon: { variant: 'bars', glyph: 'wave', hue: 186, tilt: -14 },
@@ -73,6 +120,7 @@ export const CASE_STUDIES = {
 
   safesteel: {
     title: 'SafeSteel AI',
+    skills: ['Results focus', 'Attention to detail'],
     kicker: 'Case study · LLM evaluation',
     lede: 'An evaluation and red-teaming framework for LLMs: a bank of adversarial prompts, automatic scoring, and run-to-run tracking, so a change to the model or the prompt is judged by numbers.',
     icon: { variant: 'pyramid', glyph: 'shield', hue: 22, tilt: -14 },
@@ -124,19 +172,19 @@ export default function CaseStudy({ id }) {
 
   return (
     <article className="mx-auto max-w-3xl px-6 pt-10 pb-24 md:pt-16" style={{ '--h': cs.icon.hue }}>
-      <a href="#work" className="inline-flex items-center gap-2 text-sm text-dim hover:text-accent transition-colors duration-300">
-        <span aria-hidden="true">←</span> All work
+      <a href={`#${cs.back || 'work'}`} className="inline-flex items-center gap-2 text-sm text-dim hover:text-accent transition-colors duration-300">
+        <span aria-hidden="true">←</span> {cs.back === 'research' ? 'Research & case studies' : 'All work'}
       </a>
 
       <header className="mt-8 grid md:grid-cols-[1fr_220px] gap-8 items-center">
         <div>
           <div className="font-mono text-xs uppercase tracking-[0.18em] proj-hue">{cs.kicker}</div>
-          <h1 className="mt-3 font-display text-5xl md:text-7xl leading-[0.95]">{cs.title}</h1>
+          <h1 className={`mt-3 font-display leading-[0.95] ${cs.title.length > 24 ? 'text-4xl md:text-6xl' : 'text-5xl md:text-7xl'}`}>{cs.title}</h1>
           <p className="mt-5 text-lg text-dim leading-relaxed">{cs.lede}</p>
           {cs.links.length > 0 && (
             <div className="mt-7 flex flex-wrap gap-2">
               {cs.links.map(([label, href], i) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" {...(href.endsWith('.pdf') ? { download: '' } : {})}
                   className={`press inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold ${i === 0 ? 'bg-accent text-base hover:bg-accent2' : 'border border-line2 text-dim hover:text-fg hover:bg-surface'}`}>
                   {label} <Arrow />
                 </a>
@@ -148,6 +196,10 @@ export default function CaseStudy({ id }) {
           <Project3D {...cs.icon} />
         </div>
       </header>
+
+      {cs.cover && (
+        <img src={cs.cover.src} alt={cs.cover.alt} width="1200" height="675" className="mt-12 w-full rounded-2xl border border-line" />
+      )}
 
       <dl className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-px overflow-hidden rounded-2xl border border-line bg-line">
         {cs.facts.map(([k, v]) => (
@@ -187,6 +239,7 @@ export default function CaseStudy({ id }) {
               </ol>
             )}
             {s.p && s.p.map((t) => <p key={t} className="mt-4 text-dim leading-relaxed">{t}</p>)}
+            {s.fig && <img src={s.fig.src} alt={s.fig.alt} width="1200" height="675" loading="lazy" className="mt-6 w-full rounded-xl border border-line" />}
           </section>
         ))}
       </div>
@@ -196,7 +249,7 @@ export default function CaseStudy({ id }) {
         <div className="mt-4 grid sm:grid-cols-2 gap-3">
           {others.map(([k, o]) => (
             <a key={k} href={`#/work/${k}`} className="spot tile rounded-xl border border-line p-5 hover:border-line2">
-              <div className="text-fg font-medium">{o.title}</div>
+              <div className="text-fg font-medium">{o.short || o.title}</div>
               <div className="mt-1 text-sm text-dim">{o.kicker.replace('Case study · ', '')}</div>
             </a>
           ))}
