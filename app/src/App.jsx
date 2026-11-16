@@ -3,6 +3,7 @@ import profile from './assets/profile.jpg'
 import kiitCampus from './assets/kiit-campus.jpg'
 import etHackathon from './assets/et-hackathon.jpg'
 import ieeePaper from './assets/ieee-paper.jpg'
+import springerPaper from './assets/springer-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
 import LiveSignals from './components/LiveSignals'
 import Project3D from './components/Project3D'
@@ -192,9 +193,9 @@ const RESEARCH = [
     link: 'https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=A%20Robust%20Framework%20for%20Stress%20Testing%20and%20Reconstruction%20in%20Medical%20Imaging%20Systems',
     linkLabel: 'Read on IEEE Xplore' },
   { n: '02', title: 'Machine Intelligence Propelled Chatbot for College Inquiries Control',
-    venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Published January 2026',
-    desc: 'A book chapter on applying machine intelligence to a chatbot that answers college inquiries for a real institution.',
-    mark: 'Springer Nature', hue: 352,
+    venue: 'ComSIA 2025 · Springer', meta: 'Co-author · Conference paper · First online 2 January 2026 · pp\u00a0445–454',
+    desc: 'Published in the Proceedings of the International Conference on Computing Systems and Intelligent Applications (ComSIA 2025). A chatbot that uses machine intelligence to answer college inquiries, written with six co-authors.',
+    mark: 'Springer Nature', hue: 352, img: springerPaper, alt: 'SpringerLink page for the paper, listing ComSIA 2025, pages 445 to 454 and its seven authors',
     link: 'https://link.springer.com/search?query=Machine+Intelligence+Propelled+Chatbot+for+College+Inquiries+Control',
     linkLabel: 'Find on SpringerLink' },
 ]
