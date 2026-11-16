@@ -2,7 +2,7 @@ import { useDeferredValue, useEffect, useRef, useState } from 'react'
 import profile from './assets/profile.jpg'
 import kiitCampus from './assets/kiit-campus.jpg'
 import etHackathon from './assets/et-hackathon.jpg'
-import ieeePaper from './assets/ieee-paper.jpg'
+import ieeePaper from './assets/ieee-xplore-paper.jpg'
 import springerPaper from './assets/springer-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
 import LiveSignals from './components/LiveSignals'
@@ -187,10 +187,10 @@ const MORE_WORK = [
 
 const RESEARCH = [
   { n: '01', title: 'A Robust Framework for Stress Testing and Reconstruction in Medical Imaging Systems',
-    venue: 'IEEE CCICT 2025', meta: 'Co-author · April 2025 · KIIT University',
-    desc: 'A framework for stress-testing medical imaging models with image reconstruction techniques, measuring how much model performance degrades when the input is reconstructed or distorted.',
-    mark: 'IEEE Xplore', hue: 210, img: ieeePaper, alt: 'IEEE Xplore record listing the paper and its six authors',
-    link: 'https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=A%20Robust%20Framework%20for%20Stress%20Testing%20and%20Reconstruction%20in%20Medical%20Imaging%20Systems',
+    venue: 'IEEE CCICT 2025', meta: 'Co-author · 2025 Seventh International Conference (CCICT 2025) · 1 citation',
+    desc: 'A framework for stress-testing medical imaging models with image reconstruction techniques, measuring how much model performance degrades when the input is reconstructed or distorted. Written with five co-authors.',
+    mark: 'IEEE Xplore', hue: 210, img: ieeePaper, alt: 'IEEE Xplore page for the paper, publisher IEEE, listing its six authors',
+    link: 'https://doi.org/10.1109/CCICT65753.2025.00094',
     linkLabel: 'Read on IEEE Xplore' },
   { n: '02', title: 'Machine Intelligence Propelled Chatbot for College Inquiries Control',
     venue: 'ComSIA 2025 · Springer', meta: 'Co-author · Conference paper · First online 2 January 2026 · pp\u00a0445–454',
