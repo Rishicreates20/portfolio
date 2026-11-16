@@ -5,6 +5,7 @@ import etHackathon from './assets/et-hackathon.jpg'
 import ieeePaper from './assets/ieee-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
 import LiveSignals from './components/LiveSignals'
+import Project3D from './components/Project3D'
 import { BRAND_ICONS } from './components/brandIcons'
 import {
   CountUp,
@@ -39,8 +40,8 @@ const GREETINGS = [
 
 const STATS = [
   ['02', 'Published papers', 'IEEE + Springer'],
-  ['300+', 'DSA problems', 'Verified live below'],
-  ['03', 'Systems from scratch', 'DB · Redis · Search'],
+  ['400+', 'DSA problems', 'Verified live below'],
+  ['1,700+', 'Automated tests', 'StudyPilot CI'],
   ['61%', 'Violation rate cut', 'LLM red-teaming'],
 ]
 
@@ -48,36 +49,137 @@ const ICON = (name) => `${import.meta.env.BASE_URL}icons/${name}.svg`
 const LANGS = [
   ['Java', ICON('java')], ['Python', ICON('python')], ['JavaScript', ICON('javascript')],
   ['TypeScript', ICON('typescript')], ['C++', ICON('cplusplus')], ['C', ICON('c')],
-  ['SQL', ICON('sql')], ['HTML5', ICON('html5')], ['CSS3', ICON('css3')], ['Bash', ICON('bash')],
+  ['Kotlin', ICON('kotlin')], ['SQL', ICON('sql')], ['HTML5', ICON('html5')], ['CSS3', ICON('css3')], ['Bash', ICON('bash')],
 ]
 const TOOLS = [
-  ['React', ICON('react')], ['Node.js', ICON('nodejs')], ['FastAPI', ICON('fastapi')], ['Next.js', ICON('nextjs')],
+  ['React', ICON('react')], ['Node.js', ICON('nodejs')], ['FastAPI', ICON('fastapi')], ['Jetpack Compose', ICON('jetpackcompose')],
   ['PostgreSQL', ICON('postgresql')], ['MongoDB', ICON('mongodb')], ['Redis', ICON('redis')], ['Docker', ICON('docker')],
   ['AWS', ICON('aws')], ['Azure', ICON('azure')], ['Linux', ICON('linux')], ['Git', ICON('git')],
+  ['SQLite', ICON('sqlite')], ['Firebase', ICON('firebase')], ['GitHub Actions', ICON('githubactions')],
+  ['pytest', ICON('pytest')], ['Playwright', ICON('playwright')],
   ['TensorFlow', ICON('tensorflow')], ['NumPy', ICON('numpy')], ['Pandas', ICON('pandas')],
 ]
 
+/* Every claim below comes from the master profile. Links are only the ones it lists. */
+const GH = 'https://github.com/Rishicreates20'
 const PROJECTS = [
-  { n: '01', title: 'Veilo', tag: 'Privacy-first hybrid search engine', anchor: true,
-    desc: 'A real retrieval engine — not an LLM wrapper. Fuses BM25 keyword retrieval (SQLite FTS5) with dense semantic search (Sentence Transformers) through a custom Reciprocal Rank Fusion layer, behind an async crawler and a FastAPI backend. Deployed and publicly accessible.',
-    stack: ['Python', 'FastAPI', 'SQLite FTS5', 'Sentence Transformers', 'RRF'],
-    link: 'https://github.com/Rishicreates20/private-search-buddy', linkLabel: 'Source' },
-  { n: '02', title: 'Relational Database Engine', tag: 'Built end-to-end',
-    desc: 'A relational database from the ground up: on-disk storage engine, B-tree indexing, a SQL query parser, and an execution layer. My strongest asset for system-design and storage/infra conversations.',
-    stack: ['Storage engine', 'B-tree', 'SQL parser', 'Query execution'],
-    link: 'https://github.com/Rishicreates20', linkLabel: 'GitHub' },
-  { n: '03', title: 'Redis Clone', tag: 'Java · in-memory store',
-    desc: 'An in-memory key–value store modelled on Redis: core data structures, a command protocol handler, and TTL-based key expiry. A study in concurrency, memory layout, and protocol design.',
-    stack: ['Java', 'In-memory store', 'Protocol design', 'TTL expiry'],
-    link: 'https://github.com/Rishicreates20', linkLabel: 'GitHub' },
-  { n: '04', title: 'SafeSteel AI', tag: 'LLM evaluation & red-teaming',
-    desc: 'Automated adversarial testing across 500+ prompts spanning 6 failure categories, cutting the measured violation rate by 61%. Built on DeepEval and LangSmith — the engineering companion to my robustness research.',
-    stack: ['DeepEval', 'LangSmith', 'Red-teaming', 'Python'],
-    link: 'https://github.com/Rishicreates20', linkLabel: 'GitHub' },
-  { n: '05', title: 'Blood Cell Classifier', tag: 'Deep learning · vision',
-    desc: 'An EfficientNetB3 classifier spanning 8 blood-cell categories on a medical-imaging dataset, tuned to a clean 98.77% validation accuracy.',
-    stack: ['EfficientNetB3', 'TensorFlow/Keras', 'Image classification'],
-    link: 'https://github.com/Rishicreates20', linkLabel: 'GitHub' },
+  { id: 'studypilot', title: 'StudyPilot', tag: 'AI learning platform', isNew: true, featured: true,
+    cats: ['fullstack', 'ai'],
+    icon: { variant: 'stack', shape: 'square', glyph: 'book', hue: 36 },
+    desc: 'Set a learning goal with a level, category, minutes per day and a target date. StudyPilot generates notes, quizzes, a roadmap and resource links for each topic, and tracks progress, study time and goal status.',
+    points: [
+      'Python back end with explicit SQL on PostgreSQL and a documented REST API (OpenAPI).',
+      'Durable job queue with leases, retries, idempotency keys and crash recovery.',
+      'Every request runs as the signed-in user under Row Level Security; retrieval-augmented answers use pgvector.',
+      '1,700+ automated tests (pytest, Vitest, Playwright) run in GitHub Actions on every change.',
+    ],
+    metrics: [['1,700+', 'automated tests'], ['3', 'topics tested end to end']],
+    stack: ['Python', 'FastAPI', 'PostgreSQL', 'pgvector', 'OpenAPI', 'GitHub Actions'],
+    note: 'The live demo uses Firebase Google sign-in, with study goals synced to Firestore.',
+    links: [['Live demo', 'https://studypilotpatch122.vercel.app'], ['Source', `${GH}/StudyPilot`]] },
+
+  { id: 'waves', title: 'Waves QA', tag: 'API test harness for a text-to-speech API', isNew: true, featured: true,
+    cats: ['qa'],
+    icon: { variant: 'bars', glyph: 'wave', hue: 186, tilt: -14 },
+    desc: 'Built for the smallest.ai hiring trial: a Python harness (requests + websockets, about 1,400 lines) that sends ~170 requests per run across the sync REST, SSE and WebSocket endpoints of the Waves TTS API, with a repro script for every finding.',
+    points: [
+      'Measured latency p50/p95: WebSocket first audio 160/195 ms, SSE 187/205 ms. Zero 5xx; a 10-request concurrent burst all succeeded.',
+      'Every request tagged with session and request IDs, logged to JSONL with the server X-Request-Id; the API key is redacted in logs.',
+      'Reported 6 findings (3 Medium, 3 Low), such as a WebSocket idle timeout that drops TCP without a Close frame and an official SDK quickstart that fails with 410 MODEL_DEPRECATED. A second run reproduced four of them exactly.',
+    ],
+    metrics: [['6', 'findings reported'], ['160 ms', 'p50 first audio (WS)']],
+    stack: ['Python', 'requests', 'websockets', 'SSE', 'Node SDK'],
+    links: [['Source', `${GH}/Waves_QA`]] },
+
+  { id: 'nooki', title: 'Nooki', tag: 'Android reminder app with a 3D pet', isNew: true,
+    cats: ['mobile'],
+    icon: { variant: 'phone', glyph: 'bell', hue: 150, tilt: -10 },
+    desc: 'A Kotlin reminder app on Jetpack Compose and Material 3, with Room + Flow for storage and a real-time 3D pet whose mood follows your reminders.',
+    points: [
+      'Exact alarms through AlarmManager.setAlarmClock wake through Doze, with a fallback if the exact-alarm permission is revoked. Alarms are restored after reboot, app update and time-zone changes.',
+      'Notification actions (Complete for XP, Snooze 5m, Dismiss) through BroadcastReceivers, with XP and levels.',
+      '3D pet (SceneView/Filament, glTF) with 4 moods from a pure PetMoodResolver covered by 7 unit tests.',
+      'GitHub Actions runs unit tests and lint and builds debug and release APKs with R8 shrinking.',
+    ],
+    metrics: [['4', 'pet moods'], ['7', 'unit tests on mood logic']],
+    stack: ['Kotlin 2.2', 'Jetpack Compose', 'Material 3', 'Room', 'AlarmManager', 'Filament'],
+    links: [['Source', `${GH}/Nooki`]] },
+
+  { id: 'veilo', title: 'Veilo', tag: 'Hybrid search engine',
+    cats: ['systems', 'ai'],
+    icon: { variant: 'orbit', glyph: 'search', hue: 265 },
+    desc: 'BM25 keyword search (SQLite FTS5) plus dense vector search, merged through a custom Reciprocal Rank Fusion layer behind FastAPI.',
+    stack: ['Python', 'FastAPI', 'SQLite FTS5', 'Dense vectors', 'RRF'],
+    links: [['Live demo', 'https://private-search-buddy.vercel.app'], ['Source', `${GH}/private-search-buddy`]] },
+
+  { id: 'redis', title: 'Redis Server for the JVM', tag: 'Java · built from scratch',
+    cats: ['systems'],
+    icon: { variant: 'cube', glyph: 'bolt', hue: 2 },
+    desc: 'A Redis server written from scratch, with command handling, TTL-based key expiry and a browser terminal.',
+    points: ['Lock-free, multi-threaded core on java.util.concurrent with a non-blocking network layer.'],
+    stack: ['Java', 'java.util.concurrent', 'Non-blocking I/O', 'TTL expiry'],
+    links: [['Source', `${GH}/Own-redis-java`]] },
+
+  { id: 'db', title: 'Relational Database Engine', tag: 'Java · built from scratch',
+    cats: ['systems'],
+    icon: { variant: 'stack', shape: 'disc', glyph: 'db', hue: 210 },
+    desc: 'A relational database from the ground up: storage engine, B-tree indexing, a SQL query parser and an execution layer.',
+    stack: ['Java', 'Storage engine', 'B-tree', 'SQL parser', 'Query execution'],
+    links: [['GitHub', GH]] },
+
+  { id: 'safesteel', title: 'SafeSteel AI', tag: 'LLM evaluation and red-teaming',
+    cats: ['ai', 'qa'],
+    icon: { variant: 'pyramid', glyph: 'shield', hue: 22, tilt: -14 },
+    desc: '500+ adversarial prompts across 6 failure categories, scored with DeepEval and tracked in LangSmith. The measured violation rate fell 61%.',
+    metrics: [['61%', 'violation rate cut'], ['500+', 'adversarial prompts']],
+    stack: ['Python', 'DeepEval', 'LangSmith', 'Red-teaming'],
+    links: [['GitHub', GH]] },
+
+  { id: 'path4u', title: 'Path4U', tag: 'Multi-agent career tool',
+    cats: ['ai', 'fullstack'],
+    icon: { variant: 'orbit', glyph: 'compass', hue: 320 },
+    desc: 'Parses a resume against a job description and returns a personalised skill-gap roadmap in about 30 seconds, using RAG, vector search and SSE streaming.',
+    stack: ['RAG', 'Vector search', 'SSE', 'Multi-agent'],
+    links: [['Live demo', 'https://skill-compass-ai-07-three.vercel.app']] },
+
+  { id: 'apb3', title: 'AMBA 3 APB Slave Verification', tag: 'SystemVerilog · hardware verification',
+    cats: ['hardware'],
+    icon: { variant: 'chip', glyph: 'chip', hue: 95, tilt: -52 },
+    desc: 'A synthesizable APB3 slave register file with PREADY wait states and PSLVERR error responses, verified with a layered, class-based testbench. Run on Synopsys VCS.',
+    points: [
+      '6 concurrent SVA properties and 3 cover properties for APB protocol checks; interface with clocking blocks.',
+      'Transaction, driver, monitor, scoreboard and env classes with mailboxes; weighted constrained-random stimulus; covergroups with 4 coverpoints and 3 crosses; shadow-register scoreboard.',
+      'README documents 6 bugs found and fixed across RTL timing, driver protocol, stimulus weighting, coverage bins and FSM recovery.',
+    ],
+    stack: ['SystemVerilog', 'SVA', 'Covergroups', 'Synopsys VCS'],
+    links: [['Source', `${GH}/apb3-slave-sv-verification`]] },
+
+  { id: 'bloodcell', title: 'Blood Cell Classifier', tag: 'Deep learning · vision',
+    cats: ['ai'],
+    icon: { variant: 'sphere', glyph: 'cell', hue: 340, tilt: -18 },
+    desc: 'An 8-class EfficientNetB3 image classifier with 98.77% validation accuracy and sub-100 ms inference.',
+    metrics: [['98.77%', 'validation accuracy']],
+    stack: ['EfficientNetB3', 'TensorFlow/Keras'],
+    links: [['GitHub', GH]] },
+]
+
+const PROJECT_FILTERS = [
+  ['all', 'All'],
+  ['systems', 'Systems'],
+  ['ai', 'AI & data'],
+  ['fullstack', 'Full-stack'],
+  ['mobile', 'Android'],
+  ['qa', 'QA & testing'],
+  ['hardware', 'Hardware'],
+]
+
+const MORE_WORK = [
+  { title: 'AI Visibility Audit for a D2C food brand', meta: 'Brand engineering assignment · July 2026',
+    desc: 'Ran 6 buyer-intent prompts across Claude, Gemini, ChatGPT and Perplexity (24 checks); the brand was missing or misrepresented in 20 of 24. Traced 3 root causes and proposed 5 fixes with a 90-day roadmap in a 10-slide deck.' },
+  { title: 'A/B Test Campaign Analysis', meta: 'Python · Pandas · Plotly',
+    desc: 'Compared a control and a test ad campaign over 30 days each, from spend and reach down the funnel to purchases, with Plotly funnel and trendline charts and a recommendation for when to use each.' },
+  { title: 'ALU in Verilog', meta: 'Digital Logic course',
+    desc: 'Designed an ALU in Verilog with testbenches, simulated on EDA Playground, and built digital logic circuits on a PCB in the lab.' },
 ]
 
 const RESEARCH = [
@@ -115,8 +217,8 @@ const AI_STACK = [
     note: 'Spec drafting, edge-case generation, and pressure-testing system designs before I commit to them.' },
   { icon: 'gemini', name: 'Gemini', kind: 'Google',
     note: 'Long-context passes over papers and whole codebases when the window matters more than the reasoning depth.' },
-  { icon: 'copilot', name: 'GitHub Copilot', kind: 'Inline',
-    note: 'Line-level completion in the editor, kept on a short leash.' },
+  { icon: 'cursor', name: 'Claude Code · Codex · Cursor', kind: 'Coding agents',
+    note: 'Development and refactoring. On StudyPilot, an agent helped wire the API key integration and chase down deployment and sign-in bugs.' },
   { icon: 'langchain', name: 'DeepEval · LangSmith', kind: 'Evaluation',
     note: 'Adversarial harnesses and trace inspection — how SafeSteel AI measured a 61% drop in violations.' },
   { icon: 'prompt', name: 'Prompt & context engineering', kind: 'Practice',
@@ -125,23 +227,26 @@ const AI_STACK = [
 
 const SKILLS = [
   ['Languages', ['Java', 'Python', 'JavaScript', 'TypeScript', 'C++', 'SQL']],
-  ['Backend & Full-Stack', ['FastAPI', 'Node.js', 'React.js', 'Next.js', 'REST APIs', 'WebSocket', 'SSE']],
-  ['Databases & Search', ['PostgreSQL', 'MongoDB', 'SQLite (FTS5)', 'Redis', 'BM25', 'Dense vectors', 'RRF']],
+  ['Backend & Full-Stack', ['FastAPI', 'Node.js', 'React.js', 'REST APIs', 'OpenAPI', 'WebSocket', 'SSE']],
+  ['Databases & Search', ['PostgreSQL', 'pgvector', 'MongoDB', 'SQLite (FTS5)', 'Redis', 'BM25', 'RRF']],
   ['Cloud & DevOps', ['AWS', 'Azure', 'Docker', 'CI/CD', 'Linux', 'Git']],
   ['Core CS', ['DSA', 'Operating Systems', 'DBMS / RDBMS', 'Networks', 'System Design']],
-  ['Data & Testing', ['ETL pipelines', 'Pandas', 'NumPy', 'DeepEval', 'LangSmith']],
+  ['Data & Testing', ['Pandas', 'NumPy', 'pytest', 'Vitest', 'Playwright', 'DeepEval', 'LangSmith']],
+  ['Android', ['Kotlin', 'Jetpack Compose', 'Material 3', 'Room', 'AlarmManager']],
+  ['Hardware', ['SystemVerilog', 'Verilog', 'SVA', 'Synopsys VCS']],
 ]
 
 const CERTS = [
   ['Linux Foundation Certified System Administrator', 'LFCS'],
   ['Microsoft Azure Essentials', 'Microsoft'],
   ['SAP Analytics Cloud — Data Analyst', 'SAP'],
+  ['Sales & CRM Overview · Lead Management · Opportunity Management', 'Salesforce'],
 ]
 
 const SOCIALS = [
   ['GitHub', 'https://github.com/Rishicreates20', 'M12 .5C5.7.5.5 5.7.5 12a11.5 11.5 0 0 0 7.9 10.9c.6.1.8-.2.8-.5v-1.8c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.8 18.3 5.1 18.3 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z'],
   ['LinkedIn', 'https://linkedin.com/in/rishikeshsarangi', 'M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z'],
-  ['LeetCode', 'https://leetcode.com/rishicreates26', 'M13.48 0a1.37 1.37 0 0 0-.98.42L2.31 10.9a4.9 4.9 0 0 0 0 6.9l5.1 5.24a4.9 4.9 0 0 0 6.94.04l3.15-3.24a1.37 1.37 0 0 0-1.97-1.9l-3.15 3.23a2.16 2.16 0 0 1-3.06-.02l-5.1-5.24a2.16 2.16 0 0 1 0-3.06l10.19-10.48A1.37 1.37 0 0 0 13.48 0zM16.6 6.5a1.37 1.37 0 0 0 0 2.74h5.03a1.37 1.37 0 0 0 0-2.74H16.6z'],
+  ['LeetCode', 'https://leetcode.com/u/rishicreates26/', 'M13.48 0a1.37 1.37 0 0 0-.98.42L2.31 10.9a4.9 4.9 0 0 0 0 6.9l5.1 5.24a4.9 4.9 0 0 0 6.94.04l3.15-3.24a1.37 1.37 0 0 0-1.97-1.9l-3.15 3.23a2.16 2.16 0 0 1-3.06-.02l-5.1-5.24a2.16 2.16 0 0 1 0-3.06l10.19-10.48A1.37 1.37 0 0 0 13.48 0zM16.6 6.5a1.37 1.37 0 0 0 0 2.74h5.03a1.37 1.37 0 0 0 0-2.74H16.6z'],
 ]
 
 /* ---------------- primitives ---------------- */
@@ -333,6 +438,148 @@ function TechTile({ label, icon, index = 0 }) {
     >
       <img src={icon} alt={`${label} logo`} width="40" height="40" loading="lazy" className="h-9 w-9 object-contain" />
       <span className="text-xs text-dim group-hover:text-fg transition-colors duration-300">{label}</span>
+    </div>
+  )
+}
+
+/* ---------------- projects ---------------- */
+function ProjectLinks({ links, title }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {links.map(([label, href], i) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${title}: ${label} (opens in a new tab)`}
+          className={`press inline-flex items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold ${
+            i === 0 && label === 'Live demo'
+              ? 'bg-accent text-base hover:bg-accent2'
+              : 'border border-line2 text-dim hover:text-fg hover:bg-surface'
+          }`}
+        >
+          {label === 'Live demo' && <span className="h-1.5 w-1.5 rounded-full bg-base/70" />}
+          {label} <Arrow />
+        </a>
+      ))}
+    </div>
+  )
+}
+
+function ProjectCard({ p, index }) {
+  const [open, setOpen] = useState(false)
+  const hasMore = p.points?.length > 0
+  return (
+    <article
+      data-tilt
+      style={{ '--h': p.icon.hue, '--i': index % 4 }}
+      className={`proj-card spot group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface hover:border-line2 ${
+        p.featured ? 'md:col-span-2 md:flex-row' : ''
+      }`}
+    >
+      <div className={`proj-stage relative shrink-0 border-line ${p.featured ? 'h-56 md:h-auto md:w-[42%] border-b md:border-b-0 md:border-r' : 'h-48 border-b'}`}>
+        <Project3D {...p.icon} size={p.featured ? 'lg' : 'md'} />
+        <div className="absolute left-4 top-4 flex items-center gap-2">
+          {p.isNew && <span className="rounded-full bg-accent/15 border border-accent/40 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-accent">New</span>}
+        </div>
+        {p.metrics && (
+          <div className="absolute inset-x-4 bottom-3 flex flex-wrap gap-x-5 gap-y-1">
+            {p.metrics.map(([v, l]) => (
+              <div key={l} className="flex items-baseline gap-1.5">
+                <span className="font-display text-xl proj-hue leading-none">{v}</span>
+                <span className="text-[0.7rem] text-faint">{l}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-6 md:p-7">
+        <div className="flex items-center gap-2.5">
+          <span className="proj-dot h-2 w-2 rounded-full" />
+          <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">{p.tag}</span>
+        </div>
+        <h3 className="mt-3 font-display text-3xl md:text-[2.1rem] leading-none text-fg">{p.title}</h3>
+        <p className="mt-3 text-dim leading-relaxed">{p.desc}</p>
+
+        {hasMore && (
+          <>
+            <ul
+              id={`pts-${p.id}`}
+              className={`mt-4 space-y-2 text-sm text-dim ${open ? '' : p.featured ? 'hidden md:block' : 'hidden'}`}
+            >
+              {p.points.map((pt) => (
+                <li key={pt} className="flex gap-2.5"><span className="proj-dot mt-[0.45rem] h-1 w-1 shrink-0 rounded-full" /><span>{pt}</span></li>
+              ))}
+            </ul>
+            {(
+              <button
+                type="button"
+                onClick={() => setOpen((v) => !v)}
+                aria-expanded={open}
+                aria-controls={`pts-${p.id}`}
+                className={`mt-3 self-start text-xs font-medium text-faint hover:text-accent transition-colors duration-300 ${p.featured ? 'md:hidden' : ''}`}
+              >
+                {open ? 'Show less' : `How it works (${p.points.length})`}
+              </button>
+            )}
+          </>
+        )}
+        {p.note && <p className="mt-3 text-xs text-faint">{p.note}</p>}
+
+        <div className="mt-auto pt-5">
+          <div className="flex flex-wrap gap-1.5">
+            {p.stack.map((s) => (<span key={s} className="font-mono text-[0.68rem] rounded-md border border-line px-2 py-0.5 text-faint">{s}</span>))}
+          </div>
+          <div className="mt-5"><ProjectLinks links={p.links} title={p.title} /></div>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function ProjectGrid() {
+  const [filter, setFilter] = useState('all')
+  const shown = PROJECTS.filter((p) => filter === 'all' || p.cats.includes(filter))
+  const counts = Object.fromEntries(PROJECT_FILTERS.map(([id]) => [id, id === 'all' ? PROJECTS.length : PROJECTS.filter((p) => p.cats.includes(id)).length]))
+  return (
+    <>
+      <div className="reveal mb-8 -mx-1 flex flex-wrap gap-2" role="group" aria-label="Filter projects">
+        {PROJECT_FILTERS.map(([id, label]) => (
+          <button
+            key={id}
+            type="button"
+            aria-pressed={filter === id}
+            onClick={() => setFilter(id)}
+            className="proj-chip press rounded-full border border-line px-3.5 py-1.5 text-sm text-dim hover:text-fg hover:border-line2"
+          >
+            {label} <span className="ml-1 font-mono text-[0.7rem] opacity-60">{counts[id]}</span>
+          </button>
+        ))}
+      </div>
+      <div className="reveal grid md:grid-cols-2 gap-4 md:gap-5">
+        {shown.map((p, i) => (
+          <ProjectCard key={p.id} p={filter === 'all' ? p : { ...p, featured: false }} index={i} />
+        ))}
+      </div>
+    </>
+  )
+}
+
+function MoreWork() {
+  return (
+    <div className="mt-16">
+      <div className="reveal mb-5 font-mono text-xs uppercase tracking-[0.16em] text-faint">Also worked on</div>
+      <div className="grid md:grid-cols-3 gap-4">
+        {MORE_WORK.map((w, i) => (
+          <div key={w.title} style={{ '--i': i }} className="spot tile reveal rounded-2xl border border-line p-5 hover:border-line2">
+            <h3 className="text-fg font-medium leading-snug">{w.title}</h3>
+            <div className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.14em] text-faint">{w.meta}</div>
+            <p className="mt-3 text-sm text-dim leading-relaxed">{w.desc}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -585,31 +832,16 @@ export default function App() {
 
         {/* WORK */}
         <section id="work" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
-          <div className="reveal mb-14 max-w-2xl">
+          <div className="reveal mb-10 max-w-2xl">
             <Kicker index="04">Selected work</Kicker>
             <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
-              <Line delay={60}>Things I built</Line>
-              <Line delay={150}>from scratch.</Line>
+              <Line delay={60}>Things I’ve built</Line>
+              <Line delay={150}>and shipped.</Line>
             </h2>
-            <p className="mt-4 text-dim text-lg">Infrastructure, not wrappers — a database engine, an in-memory store, a search engine, and an LLM evaluation harness.</p>
+            <p className="mt-4 text-dim text-lg">Systems from scratch, full-stack AI products, an Android app, API testing and hardware verification. Each one links to its code or a live demo.</p>
           </div>
-          <div className="border-t border-line">
-            {PROJECTS.map((p, i) => (
-              <a key={p.n} href={p.link} target="_blank" rel="noopener noreferrer" style={{ '--i': i }} className="row-link spot reveal group grid md:grid-cols-[3rem_1fr_auto] gap-x-8 gap-y-3 py-9 border-b border-line items-start hover:bg-surface/70 transition-colors duration-300 -mx-4 px-4 rounded-xl">
-                <div className="font-mono text-sm text-faint pt-2">{p.n}</div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-3">
-                    <h3 className="font-display text-3xl md:text-4xl leading-none group-hover:text-accent transition-colors duration-300">{p.title}</h3>
-                    {p.anchor && <span className="rounded-full border border-accent/40 text-accent text-xs font-medium px-2.5 py-1">Anchor project</span>}
-                  </div>
-                  <div className="mt-2 text-sm text-dim">{p.tag}</div>
-                  <p className="mt-4 text-dim max-w-2xl leading-relaxed">{p.desc}</p>
-                  <div className="mt-5 flex flex-wrap gap-2">{p.stack.map((s) => (<span key={s} className="font-mono text-xs rounded-md border border-line px-2.5 py-1 text-faint">{s}</span>))}</div>
-                </div>
-                <div className="hidden md:flex items-center gap-1.5 text-sm text-faint group-hover:text-accent transition-colors duration-300 pt-2 whitespace-nowrap">{p.linkLabel} <Arrow className="transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" /></div>
-              </a>
-            ))}
-          </div>
+          <ProjectGrid />
+          <MoreWork />
 
           <div className="reveal mt-20">
             <LiveSignals />
@@ -675,7 +907,7 @@ export default function App() {
             </div>
             <div className="mt-1 text-accent font-medium">Teachnook × Rhyno EV</div>
             <ul className="mt-6 space-y-3 text-dim">
-              {['Optimised backend-driven ETL pipelines handling real-time API responses, reducing end-to-end latency by 25%.', 'Refactored React rendering and data-flow logic for a 30% performance improvement across key interactions.', 'Standardised handling of structured and semi-structured data, cutting runtime inconsistencies.'].map((li, i) => (
+              {['Traced data-pipeline defects to their root cause through log analysis; the fixes cut end-to-end latency by 25%.', 'Refactored React rendering and data-flow logic on critical user paths for a 30% performance improvement.', 'Standardised handling of structured and semi-structured data, reducing runtime inconsistencies.', 'Shipped features in an Agile team of 20 alongside senior developers, keeping cross-browser compatibility.'].map((li, i) => (
                 <li key={i} className="flex gap-3"><span className="mt-2.5 h-1.5 w-1.5 rounded-full bg-accent shrink-0" /><span>{li}</span></li>
               ))}
             </ul>
@@ -750,7 +982,7 @@ export default function App() {
           <div className="flex gap-5">
             <a className="hover:text-fg transition-colors duration-300" href="https://github.com/Rishicreates20" target="_blank" rel="noopener noreferrer">GitHub</a>
             <a className="hover:text-fg transition-colors duration-300" href="https://linkedin.com/in/rishikeshsarangi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <a className="hover:text-fg transition-colors duration-300" href="https://leetcode.com/rishicreates26" target="_blank" rel="noopener noreferrer">LeetCode</a>
+            <a className="hover:text-fg transition-colors duration-300" href="https://leetcode.com/u/rishicreates26/" target="_blank" rel="noopener noreferrer">LeetCode</a>
             <a className="hover:text-fg transition-colors duration-300" href="mailto:rishikeshsarangi56@gmail.com">Email</a>
           </div>
         </div>

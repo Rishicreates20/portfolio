@@ -1,6 +1,6 @@
 ﻿const fs = require("fs");
 const si = require("simple-icons");
-const pick = { claude: "claude", gemini: "googlegemini", copilot: "githubcopilot", langchain: "langchain" };
+const pick = { claude: "claude", gemini: "googlegemini", cursor: "cursor", langchain: "langchain" };
 const lines = [];
 lines.push("/* Brand paths generated from simple-icons (CC0). Trademarks belong to their owners. */");
 lines.push("/* Regenerate: node scripts/gen-ai-icons.cjs */");
