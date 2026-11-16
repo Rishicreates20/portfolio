@@ -15,6 +15,7 @@ export const CASE_STUDIES = {
   twt: {
     title: 'The Whole Truth: AI Visibility Audit',
     short: 'TWT AI Visibility Audit',
+    metrics: [['20/24', 'AI answers missing the brand'], ['5', 'fixes']],
     kicker: 'Case study · Brand audit',
     back: 'research',
     skills: ['Presenting insights', 'Problem-solving', 'Written communication'],
@@ -54,6 +55,7 @@ export const CASE_STUDIES = {
   studypilot: {
     title: 'StudyPilot',
     skills: ['Problem-solving', 'Ownership'],
+    metrics: [['1,700+', 'tests'], ['3', 'bugs traced']],
     kicker: 'Case study · AI learning platform',
     lede: 'A learning platform that turns a goal into a study plan: notes, quizzes, a roadmap and resource links for every topic, with progress tracked over time.',
     icon: { variant: 'stack', shape: 'square', glyph: 'book', hue: 36 },
@@ -89,6 +91,7 @@ export const CASE_STUDIES = {
   waves: {
     title: 'Waves QA',
     skills: ['Attention to detail', 'Written communication'],
+    metrics: [['160 ms', 'p50 first audio'], ['6', 'findings']],
     kicker: 'Case study · API testing',
     lede: 'An API test harness for the smallest.ai Waves text-to-speech API, built for their hiring trial. It measures latency across three transports, logs every request so it can be traced, and ships a repro script for every finding.',
     icon: { variant: 'bars', glyph: 'wave', hue: 186, tilt: -14 },
@@ -121,6 +124,7 @@ export const CASE_STUDIES = {
   safesteel: {
     title: 'SafeSteel AI',
     skills: ['Results focus', 'Attention to detail'],
+    metrics: [['500+', 'prompts'], ['61%', 'fewer violations']],
     kicker: 'Case study · LLM evaluation',
     lede: 'An evaluation and red-teaming framework for LLMs: a bank of adversarial prompts, automatic scoring, and run-to-run tracking, so a change to the model or the prompt is judged by numbers.',
     icon: { variant: 'pyramid', glyph: 'shield', hue: 22, tilt: -14 },

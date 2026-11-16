@@ -299,3 +299,80 @@
   .p3d *, .p3d { animation: none !important; }
   .proj-card:hover { transform: none; }
 }
+
+/* ---------------- research & case studies ---------------- */
+.res-section { isolation: isolate; }
+.res-glow { position: absolute; border-radius: 9999px; filter: blur(70px); opacity: .55; }
+.res-glow-a { width: 460px; height: 460px; right: -140px; top: 40px; background: radial-gradient(circle, rgba(233, 162, 59, .22), transparent 65%); }
+.res-glow-b { width: 520px; height: 520px; left: -200px; top: 46%; background: radial-gradient(circle, hsla(186, 90%, 55%, .10), transparent 65%); }
+.res-grid {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(hsla(0, 0%, 100%, .03) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, hsla(0, 0%, 100%, .03) 1px, transparent 1px) 0 0 / 44px 44px;
+  -webkit-mask-image: radial-gradient(70% 45% at 70% 12%, #000 10%, transparent 75%);
+          mask-image: radial-gradient(70% 45% at 70% 12%, #000 10%, transparent 75%);
+}
+.res-ghost {
+  position: absolute; right: -8px; top: 48px; font-size: clamp(7rem, 18vw, 15rem); line-height: .8;
+  color: transparent; -webkit-text-stroke: 1px hsla(36, 80%, 60%, .12); letter-spacing: -0.02em; user-select: none;
+}
+.res-glass {
+  background: linear-gradient(180deg, hsla(0, 0%, 100%, .06), hsla(0, 0%, 100%, .02));
+  border: 1px solid hsla(0, 0%, 100%, .09);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 1px 0 hsla(0, 0%, 100%, .06);
+}
+.res-skill { color: hsl(var(--h, 36), 80%, 78%); background: hsla(var(--h, 36), 90%, 60%, .08); border: 1px solid hsla(var(--h, 36), 90%, 60%, .22); }
+
+/* paper record, tilted like a sheet on a desk */
+.res-paper {
+  width: 168px; height: 170px; border-radius: 10px; overflow: hidden; background: #fff;
+  transform: translate(-50%, -46%) perspective(700px) rotateX(14deg) rotateY(-16deg) rotateZ(3deg);
+  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, .8), 0 0 0 1px hsla(var(--h), 90%, 70%, .35), 0 0 40px hsla(var(--h), 90%, 55%, .25);
+  transition: transform .6s var(--ease-emph);
+}
+.group:hover .res-paper { transform: translate(-50%, -50%) perspective(700px) rotateX(6deg) rotateY(-6deg) rotateZ(0deg) scale(1.04); }
+.res-shine {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 35%, hsla(0, 0%, 100%, .07) 50%, transparent 65%);
+  transform: translateX(-60%); transition: transform .9s var(--ease-emph);
+}
+.group:hover .res-shine { transform: translateX(60%); }
+
+/* featured cover with overlay */
+.res-cover img { transition: transform .8s var(--ease-emph), filter .5s; filter: saturate(.9) brightness(.85); }
+.res-cover:hover img { transform: scale(1.045); filter: saturate(1) brightness(.95); }
+.res-cover-fade {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(8, 8, 11, .15) 0%, transparent 35%, rgba(8, 8, 11, .85) 100%),
+    radial-gradient(80% 60% at 20% 0%, hsla(var(--h), 90%, 55%, .18), transparent 70%);
+}
+.res-reveal {
+  position: absolute; right: 16px; top: 16px; padding: 7px 12px; border-radius: 9999px; font-size: .72rem; font-weight: 600;
+  color: #08080b; background: var(--accent); opacity: 0; transform: translateY(-6px);
+  transition: opacity .35s var(--ease-standard), transform .45s var(--ease-emph);
+}
+.res-cover:hover .res-reveal, .res-cover:focus-visible .res-reveal { opacity: 1; transform: none; }
+
+/* soft-skills panel */
+.res-skills { border-radius: 1.5rem; }
+.res-skills-glow {
+  position: absolute; inset: -1px; pointer-events: none;
+  background:
+    radial-gradient(50% 80% at 0% 0%, rgba(233, 162, 59, .14), transparent 70%),
+    radial-gradient(40% 70% at 100% 100%, hsla(270, 90%, 60%, .10), transparent 70%);
+}
+.res-proof::after {
+  content: ''; position: absolute; left: 0; top: 18px; bottom: 18px; width: 2px; border-radius: 2px;
+  background: hsl(var(--h), 90%, 62%); box-shadow: 0 0 12px hsla(var(--h), 95%, 60%, .7);
+  opacity: .45; transition: opacity .3s;
+}
+.res-proof:hover::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .res-paper, .group:hover .res-paper { transition: none; }
+  .res-shine { display: none; }
+  .res-cover img, .res-cover:hover img { transition: none; transform: none; }
+}

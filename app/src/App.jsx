@@ -188,24 +188,24 @@ const RESEARCH = [
   { n: '01', title: 'A Robust Framework for Stress Testing and Reconstruction in Medical Imaging Systems',
     venue: 'IEEE CCICT 2025', meta: 'Co-author · April 2025 · KIIT University',
     desc: 'A framework for stress-testing medical imaging models with image reconstruction techniques, measuring how much model performance degrades when the input is reconstructed or distorted.',
-    mark: 'IEEE Xplore', img: ieeePaper, alt: 'IEEE Xplore record listing the paper and its six authors',
+    mark: 'IEEE Xplore', hue: 210, img: ieeePaper, alt: 'IEEE Xplore record listing the paper and its six authors',
     link: 'https://ieeexplore.ieee.org/search/searchresult.jsp?queryText=A%20Robust%20Framework%20for%20Stress%20Testing%20and%20Reconstruction%20in%20Medical%20Imaging%20Systems',
     linkLabel: 'Read on IEEE Xplore' },
   { n: '02', title: 'Machine Intelligence Propelled Chatbot for College Inquiries Control',
     venue: 'ComSIA 2025 · Springer Nature Singapore', meta: 'Co-author · Published January 2026',
     desc: 'A book chapter on applying machine intelligence to a chatbot that answers college inquiries for a real institution.',
-    mark: 'Springer Nature',
+    mark: 'Springer Nature', hue: 352,
     link: 'https://link.springer.com/search?query=Machine+Intelligence+Propelled+Chatbot+for+College+Inquiries+Control',
     linkLabel: 'Find on SpringerLink' },
 ]
 
 // Soft skills, each backed by a fact on this page (STRONG entries in the master profile only).
 const SOFT_SKILLS = [
-  ['Presenting insights', 'Turned 24 AI-engine checks into 3 root causes, 5 fixes and a 90-day plan in a 10-slide deck for a brand team.', '#/work/twt'],
-  ['Written communication', 'Co-authored 2 peer-reviewed papers (IEEE CCICT 2025, Springer ComSIA 2025) and wrote a repro script for every API finding.', '#/work/waves'],
-  ['Problem-solving', 'Traced a CI failure that local setup hid to a missing pgvector extension, and fixed a Gemini 400 by bisecting the request.', '#/work/studypilot'],
-  ['Attention to detail', '1,700+ tests on every change, 500+ adversarial prompts, 24 structured checks.', '#/work/safesteel'],
-  ['Teamwork', 'Shipped features in an Agile team of 20 alongside senior developers; co-author on both papers.', '#experience'],
+  ['Presenting insights', 'Turned 24 AI-engine checks into 3 root causes, 5 fixes and a 90-day plan in a 10-slide deck for a brand team.', '#/work/twt', 78],
+  ['Written communication', 'Co-authored 2 peer-reviewed papers (IEEE CCICT 2025, Springer ComSIA 2025) and wrote a repro script for every API finding.', '#/work/waves', 186],
+  ['Problem-solving', 'Traced a CI failure that local setup hid to a missing pgvector extension, and fixed a Gemini 400 by bisecting the request.', '#/work/studypilot', 36],
+  ['Attention to detail', '1,700+ tests on every change, 500+ adversarial prompts, 24 structured checks.', '#/work/safesteel', 22],
+  ['Teamwork', 'Shipped features in an Agile team of 20 alongside senior developers; co-author on both papers.', '#experience', 270],
 ]
 
 const EDUCATION = [
@@ -902,91 +902,175 @@ export default function App() {
         </section>
 
         {/* RESEARCH */}
-        <section id="research" className="mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
-          <div className="reveal mb-12 max-w-2xl">
-            <Kicker index="05">Research &amp; case studies</Kicker>
-            <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
-              <Line delay={60}>Find the cause,</Line>
-              <Line delay={150}>then explain it.</Line>
-            </h2>
-            <p className="mt-4 text-dim text-lg">Two published papers and four written case studies. Each one starts with a measurement and ends with something another person can read and act on.</p>
+        <section id="research" className="res-section relative mx-auto max-w-5xl px-6 py-20 md:py-28 border-t border-line">
+          <div aria-hidden="true" className="res-deco pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+            <div className="res-glow res-glow-a" />
+            <div className="res-glow res-glow-b" />
+            <div className="res-grid" />
+            <div className="res-ghost font-display">R&amp;D</div>
           </div>
-          <div className="space-y-4">
+
+          <div className="reveal mb-12 grid md:grid-cols-[1fr_auto] gap-8 items-end">
+            <div className="max-w-2xl">
+              <Kicker index="05">Research &amp; case studies</Kicker>
+              <h2 className="font-display text-4xl md:text-6xl leading-[1.02]">
+                <Line delay={60}>Find the cause,</Line>
+                <Line delay={150}><span className="text-accent italic">then explain it.</span></Line>
+              </h2>
+              <p className="mt-4 text-dim text-lg">Two published papers and four written case studies. Each one starts with a measurement and ends with something another person can read and act on.</p>
+            </div>
+            <div className="grid grid-cols-2 gap-2 md:w-[260px]">
+              {[['02', 'papers'], ['04', 'case studies'], ['24', 'AI checks'], ['1,700+', 'tests in CI']].map(([v, l]) => (
+                <div key={l} className="res-glass rounded-xl px-3.5 py-3">
+                  <div className="font-display text-2xl text-fg leading-none">{v}</div>
+                  <div className="mt-1 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-faint">{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* papers */}
+          <div className="reveal flex items-center gap-3 mb-5">
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Published</span>
+            <span className="h-px flex-1 bg-gradient-to-r from-line2 to-transparent" />
+          </div>
+          <div className="reveal grid md:grid-cols-2 gap-4">
             {RESEARCH.map((r, i) => (
-              <article key={r.n} style={{ '--i': i }} className="spot reveal rounded-2xl border border-line bg-surface p-6 md:p-8 hover:border-line2 transition-colors duration-300">
-                <div className="grid md:grid-cols-[190px_1fr] gap-6 md:gap-8">
+              <article key={r.n} data-tilt style={{ '--h': r.hue, '--i': i }}
+                className="proj-card spot group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface hover:border-line2">
+                <div className="proj-stage relative h-52 shrink-0 border-b border-line overflow-hidden">
                   {r.img ? (
-                    <a
-                      href={r.link} target="_blank" rel="noopener noreferrer"
-                      className="block overflow-hidden rounded-xl border border-line2 bg-white h-[190px]"
-                      aria-label={`${r.linkLabel} — ${r.title}`}
-                    >
+                    <a href={r.link} target="_blank" rel="noopener noreferrer" aria-label={`${r.linkLabel}: ${r.title}`} className="res-paper absolute left-1/2 top-1/2">
                       <img src={r.img} alt={r.alt} width="790" height="800" loading="lazy" className="h-full w-full object-cover object-top" />
                     </a>
                   ) : (
-                    <div className="grid h-[190px] place-items-center rounded-xl border border-line2 bg-raise px-4 text-center">
-                      <div>
-                        <div className="font-display text-5xl text-accent leading-none">{r.n}</div>
-                        <div className="mt-3 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-faint">{r.mark}</div>
-                      </div>
-                    </div>
+                    <Project3D variant="stack" shape="square" glyph="book" hue={r.hue} tilt={-16} />
                   )}
-                  <div>
-                    <div className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-faint">{r.mark}</div>
-                    <h3 className="mt-2 text-xl leading-snug text-fg">{r.title}</h3>
-                    <div className="mt-2 text-sm font-semibold text-accent">{r.venue}</div>
-                    <div className="text-sm text-faint">{r.meta}</div>
-                    <p className="mt-3 text-dim leading-relaxed">{r.desc}</p>
-                    <a href={r.link} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-1.5 text-sm text-dim hover:text-accent transition-colors duration-300">
-                      {r.linkLabel} <Arrow />
-                    </a>
+                  <div className="res-shine" aria-hidden="true" />
+                  <div className="absolute left-4 top-4 flex items-center gap-2">
+                    <span className="res-glass rounded-full px-2.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] proj-hue">Peer-reviewed</span>
                   </div>
+                  <div className="absolute right-4 bottom-3 font-display text-5xl leading-none text-fg/10">{r.n}</div>
+                </div>
+                <div className="flex flex-1 flex-col p-6 md:p-7">
+                  <div className="flex items-center gap-2.5">
+                    <span className="proj-dot h-2 w-2 rounded-full" />
+                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">{r.venue}</span>
+                  </div>
+                  <h3 className="mt-3 font-display text-2xl md:text-[1.7rem] leading-[1.1] text-fg">{r.title}</h3>
+                  <div className="mt-2 text-sm text-faint">{r.meta}</div>
+                  <p className="mt-3 text-dim leading-relaxed">{r.desc}</p>
+                  <a href={r.link} target="_blank" rel="noopener noreferrer"
+                    className="press mt-auto pt-5 inline-flex items-center gap-1.5 self-start text-sm font-semibold proj-hue hover:text-fg transition-colors duration-300">
+                    {r.linkLabel} <Arrow />
+                  </a>
                 </div>
               </article>
             ))}
           </div>
-        
-          <div className="reveal mt-16 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Case studies</div>
-              <h3 className="mt-2 font-display text-3xl md:text-4xl">Written up in full</h3>
-            </div>
+
+          {/* case studies */}
+          <div className="reveal mt-16 flex items-center gap-3 mb-5">
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Case studies</span>
+            <span className="h-px flex-1 bg-gradient-to-r from-line2 to-transparent" />
           </div>
-          <div className="reveal mt-6 grid sm:grid-cols-2 gap-4">
-            {['twt', 'studypilot', 'waves', 'safesteel'].map((k, i) => {
+          {(() => {
+            const f = CASE_STUDIES.twt
+            return (
+              <article data-tilt style={{ '--h': f.icon.hue }}
+                className="reveal proj-card spot group flex flex-col md:flex-row overflow-hidden rounded-2xl border border-line bg-surface hover:border-line2">
+                <a href="#/work/twt" className="res-cover relative block aspect-video md:aspect-auto md:w-[52%] shrink-0 overflow-hidden border-b md:border-b-0 md:border-r border-line" aria-label="Read the AI Visibility Audit case study">
+                  <img src={f.cover.src} alt={f.cover.alt} width="1200" height="675" loading="lazy" className="h-full w-full object-contain bg-[#0b0b0d]" />
+                  <div className="res-cover-fade" aria-hidden="true" />
+                  <div className="absolute left-4 top-4 flex items-center gap-2">
+                    <span className="rounded-full bg-accent/15 border border-accent/40 px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.14em] text-accent backdrop-blur">New</span>
+                  </div>
+                  <div className="absolute inset-x-4 bottom-4 hidden md:flex flex-wrap gap-2">
+                    {f.metrics.map(([v, l]) => (
+                      <div key={l} className="res-glass rounded-xl px-3 py-2 flex items-baseline gap-1.5">
+                        <span className="font-display text-2xl proj-hue leading-none">{v}</span>
+                        <span className="text-[0.7rem] text-dim">{l}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <span className="res-reveal" aria-hidden="true">Read the case study <span>→</span></span>
+                </a>
+                <div className="flex flex-1 flex-col p-6 md:p-8">
+                  <div className="flex items-center gap-2.5">
+                    <span className="proj-dot h-2 w-2 rounded-full" />
+                    <span className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-faint">Brand audit · July 2026</span>
+                  </div>
+                  <h3 className="mt-3 font-display text-3xl md:text-[2.3rem] leading-[1.02] text-fg">The Whole Truth: AI Visibility Audit</h3>
+                  <p className="mt-3 text-dim leading-relaxed">{f.lede}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {f.skills.map((sk) => <span key={sk} className="res-skill rounded-full px-2.5 py-1 text-[0.7rem]">{sk}</span>)}
+                  </div>
+                  <div className="mt-auto pt-6 flex flex-wrap items-center gap-2">
+                    <a href="#/work/twt" className="press inline-flex items-center gap-1.5 rounded-full bg-accent text-base px-4 py-2 text-xs font-semibold hover:bg-accent2">Read case study <span aria-hidden="true">→</span></a>
+                    <a href={f.links[0][1]} download className="press inline-flex items-center gap-1.5 rounded-full border border-line2 px-4 py-2 text-xs font-semibold text-dim hover:text-fg hover:bg-surface">Deck (PDF) <Arrow /></a>
+                  </div>
+                </div>
+              </article>
+            )
+          })()}
+          <div className="reveal mt-4 grid md:grid-cols-3 gap-4">
+            {['studypilot', 'waves', 'safesteel'].map((k, i) => {
               const c = CASE_STUDIES[k]
               return (
-                <a key={k} href={`#/work/${k}`} style={{ '--i': i, '--h': c.icon.hue }}
-                  className="spot tile group flex flex-col rounded-2xl border border-line bg-surface p-6 hover:border-line2 transition-colors duration-300">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="font-mono text-[0.65rem] uppercase tracking-[0.16em] proj-hue">{c.kicker.replace('Case study · ', '')}</div>
-                      <div className="mt-2 text-xl text-fg leading-snug">{c.short || c.title}</div>
-                    </div>
-                    <div className="proj-stage relative h-24 w-24 shrink-0 rounded-xl border border-line">
-                      <Project3D {...c.icon} size="sm" />
+                <a key={k} href={`#/work/${k}`} data-tilt style={{ '--h': c.icon.hue, '--i': i }}
+                  className="proj-card spot group flex flex-col overflow-hidden rounded-2xl border border-line bg-surface hover:border-line2">
+                  <div className="proj-stage relative h-44 shrink-0 border-b border-line">
+                    <Project3D {...c.icon} />
+                    <div className="absolute inset-x-4 bottom-3 flex flex-wrap gap-x-4 gap-y-1">
+                      {c.metrics.map(([v, l]) => (
+                        <div key={l} className="flex items-baseline gap-1.5">
+                          <span className="font-display text-xl proj-hue leading-none">{v}</span>
+                          <span className="text-[0.68rem] text-faint">{l}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <p className="mt-3 text-sm text-dim leading-relaxed line-clamp-3">{c.lede}</p>
-                  <div className="mt-4 flex flex-wrap gap-1.5">
-                    {c.skills.map((sk) => <span key={sk} className="rounded-full border border-line2 px-2.5 py-1 text-[0.7rem] text-dim">{sk}</span>)}
+                  <div className="flex flex-1 flex-col p-6">
+                    <div className="flex items-center gap-2.5">
+                      <span className="proj-dot h-2 w-2 rounded-full" />
+                      <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-faint">{c.kicker.replace('Case study · ', '')}</span>
+                    </div>
+                    <div className="mt-3 font-display text-[1.75rem] leading-none text-fg">{c.title}</div>
+                    <p className="mt-3 text-sm text-dim leading-relaxed line-clamp-3">{c.lede}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {c.skills.map((sk) => <span key={sk} className="res-skill rounded-full px-2.5 py-1 text-[0.68rem]">{sk}</span>)}
+                    </div>
+                    <span className="mt-auto pt-5 inline-flex items-center gap-1.5 text-sm font-semibold proj-hue">Read case study <span className="transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">→</span></span>
                   </div>
-                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm text-dim group-hover:text-accent transition-colors duration-300">Read case study <Arrow /></span>
                 </a>
               )
             })}
           </div>
 
-          <div className="reveal mt-16">
-            <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Soft skills, with proof</div>
-            <dl className="mt-5 grid md:grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line">
-              {SOFT_SKILLS.map(([k, v, href], i) => (
-                <a key={k} href={href} className={`block bg-base p-5 ${i === SOFT_SKILLS.length - 1 && SOFT_SKILLS.length % 2 ? 'md:col-span-2' : ''} hover:bg-surface transition-colors duration-300`}>
-                  <dt className="text-fg font-medium">{k}</dt>
-                  <dd className="mt-1 text-sm text-dim leading-relaxed">{v}</dd>
+          {/* soft skills */}
+          <div className="reveal mt-20 res-glass res-skills relative overflow-hidden rounded-3xl p-6 md:p-10">
+            <div className="res-skills-glow" aria-hidden="true" />
+            <div className="relative flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Soft skills</div>
+                <h3 className="mt-2 font-display text-3xl md:text-5xl leading-[1.02]">Every one comes <span className="italic text-accent">with receipts.</span></h3>
+              </div>
+              <p className="max-w-xs text-sm text-dim">No adjectives without proof. Each skill links to the work that shows it.</p>
+            </div>
+            <div className="relative mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {SOFT_SKILLS.map(([k, v, href, hue], i) => (
+                <a key={k} href={href} style={{ '--h': hue }}
+                  className={`res-proof spot tile group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-base/70 p-5 hover:border-line2 ${i === 0 ? 'lg:row-span-2' : ''}`}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[0.65rem] proj-hue">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="proj-dot h-1.5 w-1.5 rounded-full" />
+                  </div>
+                  <div className={`mt-3 text-fg font-medium ${i === 0 ? 'font-display text-3xl leading-none' : ''}`}>{k}</div>
+                  <p className="mt-2 text-sm text-dim leading-relaxed">{v}</p>
+                  <span className="mt-auto pt-4 text-xs font-semibold proj-hue opacity-70 group-hover:opacity-100 transition-opacity duration-300">See the proof <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span></span>
                 </a>
               ))}
-            </dl>
+            </div>
           </div>
         </section>
 
