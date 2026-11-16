@@ -164,15 +164,17 @@ export function CountUp({ value, className = '' }) {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const match = String(value).match(/^(\d+)(.*)$/)
+    const match = String(value).match(/^(\d[\d,]*)(.*)$/)
     if (!match || prefersReduced() || !('IntersectionObserver' in window)) {
       el.textContent = String(value)
       return
     }
-    const end = Number(match[1])
-    const pad = match[1].length
+    const grouped = match[1].includes(',')
+    const end = Number(match[1].replace(/,/g, ''))
+    const pad = grouped ? 1 : match[1].length
     const suffix = match[2]
-    el.textContent = `${'0'.repeat(pad)}${suffix}`
+    const fmt = (n) => (grouped ? n.toLocaleString('en-US') : String(n).padStart(pad, '0'))
+    el.textContent = `${fmt(0)}${suffix}`
 
     let raf = 0
     const io = new IntersectionObserver(
@@ -183,7 +185,7 @@ export function CountUp({ value, className = '' }) {
         const run = (now) => {
           const t = Math.min(1, (now - start) / 1400)
           const eased = 1 - Math.pow(1 - t, 4)
-          el.textContent = `${String(Math.round(end * eased)).padStart(pad, '0')}${suffix}`
+          el.textContent = `${fmt(Math.round(end * eased))}${suffix}`
           if (t < 1) raf = requestAnimationFrame(run)
         }
         raf = requestAnimationFrame(run)
