@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Rishikesh Sarangi — Resume</title>
+<!-- Source for public/Rishikesh-Sarangi-Resume.pdf. Rebuild: node resume/build.cjs (needs Playwright). -->
+<style>
+  @page { size: A4; margin: 9mm 12mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; color: #1a1a1a; font-size: 8.9pt; line-height: 1.32; margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  h1 { font-size: 21pt; margin: 0; letter-spacing: -0.3px; }
+  .role { color: #9a5b00; font-weight: 600; margin-top: 2px; font-size: 10pt; }
+  .contact { margin-top: 5px; color: #444; font-size: 8.8pt; }
+  .contact span + span::before { content: "·"; margin: 0 6px; color: #aaa; }
+  h2 { font-size: 9pt; text-transform: uppercase; letter-spacing: 1.4px; color: #9a5b00; border-bottom: 1px solid #e3d5bf; padding-bottom: 2px; margin: 8px 0 4px; }
+  p { margin: 0; }
+  .item { margin-bottom: 3px; }
+  .row { display: flex; justify-content: space-between; gap: 12px; }
+  .row b { font-size: 9.8pt; }
+  .meta { color: #666; font-size: 8.6pt; white-space: nowrap; }
+  ul { margin: 2px 0 0; padding-left: 14px; }
+  li { margin: 1px 0; }
+  .skills div { margin: 1.5px 0; }
+  .skills b { display: inline-block; min-width: 108px; }
+  .tech { color: #666; font-size: 8.6pt; }
+</style>
+</head>
+<body>
+  <h1>Rishikesh Sarangi</h1>
+  <div class="role">Software Engineer · Backend, Systems and Applied AI</div>
+  <div class="contact">
+    <span>Bengaluru, India</span>
+    <span><a href="mailto:rishikeshsarangi56@gmail.com">rishikeshsarangi56@gmail.com</a></span>
+    <span><a href="https://rishicreates20.github.io/portfolio/">rishicreates20.github.io/portfolio</a></span>
+    <span><a href="https://github.com/Rishicreates20">github.com/Rishicreates20</a></span>
+    <span><a href="https://linkedin.com/in/rishikeshsarangi">linkedin.com/in/rishikeshsarangi</a></span>
+    <span><a href="https://leetcode.com/u/rishicreates26/">leetcode.com/u/rishicreates26</a></span>
+  </div>
+
+  <h2>Summary</h2>
+  <p>Software engineer (B.Tech CSE, KIIT University, 2026) who learns systems by building them: a relational database engine and a multi-threaded Redis server in Java, a hybrid search engine, and an LLM evaluation framework that cut the measured violation rate by 61%. IEEE and Springer co-author, LFCS certified, 404 LeetCode problems solved.</p>
+
+  <h2>Skills</h2>
+  <div class="skills">
+    <div><b>Languages</b> Java, Python, Kotlin, SQL, JavaScript, TypeScript, C++, SystemVerilog, Verilog</div>
+    <div><b>Back end</b> FastAPI, Node.js, REST APIs, OpenAPI · PostgreSQL, pgvector, SQLite, MySQL, Redis, MongoDB</div>
+    <div><b>Front end &amp; mobile</b> React, HTML, CSS · Android: Jetpack Compose, Material 3, Room, AlarmManager</div>
+    <div><b>AI &amp; data</b> RAG, LLM evaluation (DeepEval, LangSmith), LangChain, Gemini API, TensorFlow/Keras, scikit-learn, Pandas, NumPy</div>
+    <div><b>Cloud &amp; DevOps</b> Linux (LFCS), Docker, Git, GitHub Actions, AWS, Azure, Firebase</div>
+    <div><b>Testing</b> pytest, Vitest, Playwright</div>
+  </div>
+
+  <h2>Experience</h2>
+  <div class="item">
+    <div class="row"><b>Web Development Intern, Rhyno EV (via Teachnook)</b><span class="meta">May 2024 – June 2024 · Remote</span></div>
+    <ul>
+      <li>Traced data-pipeline defects to their root cause through log analysis; the fixes cut end-to-end latency by 25%.</li>
+      <li>Refactored React rendering and data-flow logic on critical user paths for a 30% performance improvement.</li>
+      <li>Standardised handling of structured and semi-structured data, reducing runtime inconsistencies.</li>
+      <li>Shipped features in an Agile team of 20 alongside senior developers, keeping cross-browser compatibility.</li>
+    </ul>
+  </div>
+
+  <h2>Projects</h2>
+  <div class="item">
+    <div class="row"><b>StudyPilot: AI learning platform</b><span class="meta">studypilotpatch122.vercel.app</span></div>
+    <ul>
+      <li>Python back end with explicit SQL on PostgreSQL, a documented REST API (OpenAPI), and a durable job queue with leases, retries, idempotency keys and crash recovery.</li>
+      <li>Every request runs as the signed-in user under Row Level Security; retrieval-augmented answers use pgvector.</li>
+      <li>1,700+ automated tests (pytest, Vitest, Playwright) run in GitHub Actions on every change; diagnosed a CI failure and an API failure from logs.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="row"><b>Waves QA: API test harness for a TTS API</b><span class="meta">github.com/Rishicreates20/Waves_QA</span></div>
+    <ul>
+      <li>Python harness (~1,400 lines) sending ~170 requests per run over REST, SSE and WebSocket; every request traced by session and request ID in JSONL logs.</li>
+      <li>Measured WebSocket first-audio latency at 160/195 ms (p50/p95); reported 6 findings with a repro script each, 4 reproduced exactly on a second run.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="row"><b>Nooki: Android reminder app</b><span class="meta">Kotlin · github.com/Rishicreates20/Nooki</span></div>
+    <ul><li>Jetpack Compose + Room app with exact alarms that wake through Doze and survive reboots, notification actions via BroadcastReceivers, and a real-time 3D pet whose 4 moods come from a unit-tested resolver.</li></ul>
+  </div>
+  <div class="item">
+    <div class="row"><b>Redis Server for the JVM · Relational Database Engine</b><span class="meta">Java</span></div>
+    <ul>
+      <li>Redis server from scratch: lock-free, multi-threaded core on java.util.concurrent, non-blocking network layer, TTL-based key expiry and a browser terminal.</li>
+      <li>Relational database from scratch: storage engine, B-tree indexing, SQL query parser and execution layer.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="row"><b>SafeSteel AI · Veilo · Path4U</b><span class="meta">Python · FastAPI</span></div>
+    <ul>
+      <li>SafeSteel AI: 500+ adversarial prompts across 6 failure categories, scored with DeepEval and tracked in LangSmith; measured violation rate fell 61%.</li>
+      <li>Veilo: hybrid search merging BM25 (SQLite FTS5) and dense vector search through a custom Reciprocal Rank Fusion layer.</li>
+      <li>Path4U: resume-vs-job-description skill-gap roadmap in about 30 seconds using RAG, vector search and SSE streaming.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="row"><b>AMBA 3 APB Slave Verification</b><span class="meta">SystemVerilog · Synopsys VCS</span></div>
+    <ul><li>APB3 slave RTL verified with 6 SVA properties, a layered class-based testbench, constrained-random stimulus and covergroups; documented 6 bugs found and fixed.</li></ul>
+  </div>
+
+  <h2>Publications &amp; achievements</h2>
+  <ul>
+    <li>Co-author, “Robust Framework for Stress Testing Medical Imaging Models using Image Reconstruction Techniques”, IEEE CCICT 2025.</li>
+    <li>Co-author, paper on an AI chatbot, ComSIA 2025, Springer Nature Singapore.</li>
+    <li>Semi-finalist, ET AI Hackathon 2026, out of 500+ teams. LeetCode: 404 problems solved.</li>
+  </ul>
+
+  <h2>Education &amp; certifications</h2>
+  <div class="row"><b>B.Tech, Computer Science and Engineering, KIIT University, Bhubaneswar</b><span class="meta">2022 – 2026 · CGPA 7.34</span></div>
+  <p class="tech" style="margin-top:3px">Linux Foundation Certified System Administrator (LFCS) · Microsoft Azure Essentials · SAP Analytics Cloud: Data Analyst · Salesforce: Sales &amp; CRM, Lead Management, Opportunity Management</p>
+</body>
+</html>

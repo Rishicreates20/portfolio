@@ -6,6 +6,8 @@ import ieeePaper from './assets/ieee-paper.jpg'
 import ScrollCursor from './components/ScrollCursor'
 import LiveSignals from './components/LiveSignals'
 import Project3D from './components/Project3D'
+import CaseStudy, { CASE_STUDIES } from './components/CaseStudy'
+import ContactForm from './components/ContactForm'
 import { BRAND_ICONS } from './components/brandIcons'
 import {
   CountUp,
@@ -532,7 +534,14 @@ function ProjectCard({ p, index }) {
           <div className="flex flex-wrap gap-1.5">
             {p.stack.map((s) => (<span key={s} className="font-mono text-[0.68rem] rounded-md border border-line px-2 py-0.5 text-faint">{s}</span>))}
           </div>
-          <div className="mt-5"><ProjectLinks links={p.links} title={p.title} /></div>
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            {CASE_STUDIES[p.id] && (
+              <a href={`#/work/${p.id}`} className="press inline-flex items-center gap-1.5 rounded-full border border-accent/40 px-3.5 py-2 text-xs font-semibold text-accent hover:bg-accent/10">
+                Read case study <span aria-hidden="true">→</span>
+              </a>
+            )}
+            <ProjectLinks links={p.links} title={p.title} />
+          </div>
         </div>
       </div>
     </article>
@@ -586,6 +595,30 @@ function MoreWork() {
   )
 }
 
+const RESUME_URL = `${import.meta.env.BASE_URL}Rishikesh-Sarangi-Resume.pdf`
+
+/* Hash routes: #/work/<id> opens a case study; any other hash is a section on the home page. */
+const caseFromHash = () => {
+  const m = window.location.hash.match(/^#\/work\/([\w-]+)/)
+  return m ? m[1] : null
+}
+function useCaseRoute() {
+  const [route, setRoute] = useState(caseFromHash)
+  useEffect(() => {
+    const onHash = () => {
+      const next = caseFromHash()
+      setRoute(next)
+      if (!next) {
+        const id = window.location.hash.slice(1)
+        requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView())
+      }
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+  return route
+}
+
 /* ---------------- app ---------------- */
 export default function App() {
   useReveal()
@@ -594,6 +627,7 @@ export default function App() {
   const [imgOk, setImgOk] = useState(true)
   const [loaded, setLoaded] = useState(false)
   const active = useActiveSection(SECTION_IDS)
+  const route = useCaseRoute()
 
   const portraitRef = useRef(null)
   const gridRef = useRef(null)
@@ -633,6 +667,8 @@ export default function App() {
       </header>
 
       <main id="main" className="relative z-10">
+        {route && <CaseStudy id={route} />}
+        <div hidden={!!route}>
         {/* HERO */}
         <section id="top" className="mx-auto max-w-5xl px-6 pt-16 pb-14 md:pt-24 md:pb-20">
           <div className="grid md:grid-cols-[1.1fr_.9fr] gap-12 md:gap-16 items-center">
@@ -657,7 +693,10 @@ export default function App() {
                   <a href="#work" className="press inline-flex items-center gap-2 rounded-full bg-accent text-base px-5 py-3 text-sm font-semibold hover:bg-accent2">See my work <Arrow /></a>
                 </Magnetic>
                 <Magnetic>
-                  <a href="mailto:rishikeshsarangi56@gmail.com" className="press inline-flex items-center gap-2 rounded-full border border-line2 px-5 py-3 text-sm font-medium hover:bg-surface">Get in touch</a>
+                  <a href={RESUME_URL} download className="press inline-flex items-center gap-2 rounded-full border border-line2 px-5 py-3 text-sm font-medium hover:bg-surface">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M12 4v11m0 0-4-4m4 4 4-4M5 20h14" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                    Download resume
+                  </a>
                 </Magnetic>
               </div>
               <div className="mt-9 flex items-center gap-3">
@@ -968,6 +1007,9 @@ export default function App() {
                 </a>
               </Magnetic>
               <Magnetic>
+                <a href={RESUME_URL} download className="press inline-flex items-center gap-2 rounded-full border border-line2 px-6 py-3.5 text-sm font-medium hover:bg-surface">Resume (PDF)</a>
+              </Magnetic>
+              <Magnetic>
                 <a href="https://github.com/Rishicreates20" target="_blank" rel="noopener noreferrer" className="press inline-flex items-center gap-2 rounded-full border border-line2 px-6 py-3.5 text-sm font-medium hover:bg-surface">GitHub <Arrow /></a>
               </Magnetic>
               <Magnetic>
@@ -975,7 +1017,14 @@ export default function App() {
               </Magnetic>
             </div>
           </div>
+          <div className="reveal mx-auto mt-10 max-w-2xl rounded-[1.5rem] border border-line bg-raise/70 p-6 md:p-8">
+            <div className="mb-5 text-left">
+              <div className="font-mono text-xs uppercase tracking-[0.18em] text-faint">Or leave a message</div>
+            </div>
+            <ContactForm />
+          </div>
         </section>
+        </div>
       </main>
 
       <footer className="border-t border-line relative z-10">
